@@ -18,7 +18,7 @@ class View(tk.Tk):
 
         self._make_main_frame()
 
-        self._make_label(self.temperature, 825, 380, "black", "white", 50)
+        self._make_label(self.temperature, 790, 380, "black", "white", 50)
         self._make_label(self.date, 30, 340, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
         self._make_label(self.time, 30, 380, "black", "white", 50)
         self._make_label(self.seconds, 198, 380, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
