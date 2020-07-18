@@ -1,37 +1,51 @@
 import threading
 import time
 
-from timemodel import TimeModel
+from models.timemodel import TimeModel
+from models.sensormodel import SensorModel 
 from view import View
 
 class Controller:
     def __init__(self):
         self.timemodel = TimeModel()
+        self.sensormodel = SensorModel()
         self.view = View(self)
 
     def main(self):
         time_thread = threading.Thread(target = self.time_handler)
         time_thread.start()
 
+        temperature_thread = threading.Thread(target = self.temperature_handler)
+        temperature_thread.start()
+
         self.view.main()
 
     def time_handler(self):
-        seconds = self.timemodel.get_current_second()
-        self.view.seconds.set(seconds)
+        self.view.seconds.set(self.timemodel.get_current_second())
+        self.view.time.set(self.timemodel.get_current_time())
+        self.view.date.set(self.timemodel.get_current_date())
 
         t = time.time()
         while True:
             if(time.time() - t >= 1):
-                seconds = self.timemodel.get_current_second()
-                self.view.seconds.set(seconds)
-
-                times = self.timemodel.get_current_time()
-                self.view.time.set(times)
-
-                date = self.timemodel.get_current_date()
-                self.view.date.set(date)
+                self.view.seconds.set(self.timemodel.get_current_second())
+                self.view.time.set(self.timemodel.get_current_time())
+                self.view.date.set(self.timemodel.get_current_date())
 
                 t = time.time()
+
+    def temperature_handler(self):
+        t = time.time()
+        while True:
+            if(time.time() - t >= 5):
+                self.view.temperature.set(self.sensormodel.get_temperature())
+                t = time.time()
+
+            if((time.time() - t >= 0) and (time.time() - t <= 0.5)):
+                self.sensormodel.set_led(1)
+
+            if((time.time() - t >= 0.5) and (time.time() - t <= 1)):
+                self.sensormodel.set_led(0)
 
 if __name__ == '__main__':
     calculator = Controller()
