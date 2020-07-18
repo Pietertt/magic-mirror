@@ -22,7 +22,7 @@ class FrameModel:
                             self.temperature = temperature + "\N{DEGREE SIGN}"
 
                         return data["data"]
-                    except JSONDecodeError:
+                    except ValueError:
                         print("Wrong format")
                     except UnicodeDecodeError:
                         print("Unicode error")

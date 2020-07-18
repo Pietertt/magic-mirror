@@ -1,5 +1,7 @@
 import threading
 import time
+import tkinter
+from tkinter import messagebox as mb
 
 from models.timemodel import TimeModel
 from models.sensormodel import SensorModel 
@@ -61,6 +63,13 @@ class Controller:
             self.view.temperature.set(self.framemodel.get_temperature())
             if data:
                 print(data)
+                if(data[1] == 0):
+                    self.view._change_label()
+                
+                if(data[1] == 1):
+                    self.view._change_button()
+                # if(data[0] == 0):
+                #     mb.showinfo("Test", "Test")
 
 if __name__ == '__main__':
     calculator = Controller()
