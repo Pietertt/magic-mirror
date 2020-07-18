@@ -9,6 +9,10 @@ class FrameModel:
     def read_serial(self):
         if self.ser.in_waiting > 0:
             line = self.ser.readline().decode('utf-8').rstrip()
-            return line
+            if len(line) > 0:
+                if(line[0] == "{"):
+                    data = json.loads(line)
+                    print(data["data"][0])
+                    return line
         
         return ""

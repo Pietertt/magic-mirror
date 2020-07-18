@@ -15,11 +15,11 @@ class Controller:
         self.view = View(self)
 
     def main(self):
-        time_thread = threading.Thread(target = self.time_handler)
-        time_thread.start()
+        # time_thread = threading.Thread(target = self.time_handler)
+        # time_thread.start()
 
-        temperature_thread = threading.Thread(target = self.temperature_handler)
-        temperature_thread.start()
+        # temperature_thread = threading.Thread(target = self.temperature_handler)
+        # temperature_thread.start()
 
         frame_thread = threading.Thread(target = self.frame_handler)
         frame_thread.start()
@@ -57,7 +57,7 @@ class Controller:
 
     def frame_handler(self):
         while True:
-            print(self.framemodel.read_serial())
+            self.framemodel.read_serial()
 
 if __name__ == '__main__':
     calculator = Controller()
