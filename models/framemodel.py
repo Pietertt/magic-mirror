@@ -13,14 +13,19 @@ class FrameModel:
             line = self.ser.readline().decode('utf-8').rstrip()
             if len(line) > 0:
                 if(line[0] == "{"):
-                    data = json.loads(line)
-                    temperature = str(data["temperature"])
-                    if(len(temperature) == 4):
-                        self.temperature = temperature + "0" + "\N{DEGREE SIGN}"
-                    else:
-                        self.temperature = temperature + "\N{DEGREE SIGN}"
+                    try:
+                        data = json.loads(line)
+                        temperature = str(data["temperature"])
+                        if(len(temperature) == 4):
+                            self.temperature = temperature + "0" + "\N{DEGREE SIGN}"
+                        else:
+                            self.temperature = temperature + "\N{DEGREE SIGN}"
 
-                    return data["data"]
+                        return data["data"]
+                    except JSONDecodeError:
+                        print("Wrong format")
+                    except UnicodeDecodeError:
+                        print("Unicode error")
 
     def get_temperature(self):
         return self.temperature
