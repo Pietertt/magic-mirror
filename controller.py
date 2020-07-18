@@ -57,7 +57,7 @@ class Controller:
 
     def frame_handler(self):
         while True:
-            self.framemodel.test()
+            print(self.framemodel.read_serial())
 
 if __name__ == '__main__':
     calculator = Controller()

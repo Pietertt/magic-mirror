@@ -1,7 +1,14 @@
+import serial
+import json
 
 class FrameModel:
     def __init__(self):
-        pass
+        self.ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+        self.ser.flush()
 
-    def test(self):
-        print(8)
+    def read_serial(self):
+        if self.ser.in_waiting > 0:
+            line = self.ser.readline().decode('utf-8').rstrip()
+            return line
+        
+        return ""
