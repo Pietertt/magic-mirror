@@ -7,8 +7,11 @@ class Model:
 
     def get_current_second(self):
         t = time.time()
-        local = time.localtime(t)
-        return local.tm_sec
+        local = str(time.localtime(t).tm_sec)
+        if(len(local) == 1):
+            local = "0" + local
+
+        return local
 
     def get_current_date(self):
         t = time.time()
@@ -18,37 +21,14 @@ class Model:
     def get_current_time(self):
         t = time.time()
         local = time.localtime(t)
-        return str(local.tm_hour) + ":" + str(local.tm_min)
+        hour = str(local.tm_hour)
+        minute = str(local.tm_min)
 
-    # def calculate(self, caption):
-    #     if(caption == "C"):            
-    #         self.previous_value = ""
-    #         self.value = ""
-    #         self.operator = ""
+        if(len(hour) == 1):
+            hour = "0" + hour
 
-    #     elif caption == "+/-":
-    #         self.value = self.value[1:] if self.value[0] == "-" else "-" + self.value
-        
-    #     elif caption == "%":
-    #         pass
+        if(len(minute) == 1):
+            minute = "0" + minute
 
-    #     elif caption == "=":
-    #         self.value = str(self._evaluate())
 
-    #     elif caption == ".":
-    #         if not caption in self.value:
-    #             self.value += caption
-
-    #     elif isinstance(caption, int):
-    #         self.value += str(caption)
-
-    #     else:
-    #         if self.value:
-    #             self.operator = caption
-    #             self.previous_value = self.value
-    #             self.value = ""
-
-    #     return self.value
-
-    # def _evaluate(self):
-    #     return eval(self.previous_value + self.operator + self.value)
+        return hour + ":" + minute

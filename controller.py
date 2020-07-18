@@ -1,4 +1,5 @@
 import threading
+import time
 
 from model import Model
 from view import View
@@ -18,27 +19,40 @@ class Controller:
         date_thread = threading.Thread(target = self.date_handler)
         date_thread.start()
 
-        # print(self.model.get_current_time())
-        # self.view.temperature.set("20.0")
-        # self.view.date.set("Zaterdag, 18 juli 2020")
-        # self.view.time.set("11:54")
-        # self.view.seconds.set("46")
         self.view.main()
 
     def seconds_handler(self):
+        seconds = self.model.get_current_second()
+        self.view.seconds.set(seconds)
+
+        t = time.time()
         while True:
-            seconds = self.model.get_current_second()
-            self.view.seconds.set(seconds)
+            if(time.time() - t >= 1):
+                seconds = self.model.get_current_second()
+                self.view.seconds.set(seconds)
+                t = time.time()
     
     def time_handler(self):
+        times = self.model.get_current_time()
+        self.view.time.set(times)
+
+        t = time.time()
         while True:
-            time = self.model.get_current_time()
-            self.view.time.set(time)
+            if(time.time() - t >= 1):
+                times = self.model.get_current_time()
+                self.view.time.set(times)
+                t = time.time()
 
     def date_handler(self):
+        date = self.model.get_current_date()
+        self.view.date.set(date)
+
+        t = time.time()
         while True:
-            date = self.model.get_current_date()
-            self.view.date.set(date)
+            if(time.time() - t >= 60):
+                date = self.model.get_current_date()
+                self.view.date.set(date)
+                t = time.time()
 
 
 if __name__ == '__main__':
