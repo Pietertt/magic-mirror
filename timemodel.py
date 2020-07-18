@@ -1,9 +1,11 @@
 import time
+import Adafruit_DHT
 
-class Model:
+class TimeModel:
     def __init__(self):
         self.days = ["Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"]
         self.months = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"]
+        self.sensor = Adafruit_DHT.DHT11
 
     def get_current_second(self):
         t = time.time()
@@ -30,5 +32,8 @@ class Model:
         if(len(minute) == 1):
             minute = "0" + minute
 
-
         return hour + ":" + minute
+
+    def get_temperature(self):
+        humidity, temperature = Adafruit_DHT.read(self.sensor, 4)
+        return temperature
