@@ -68,7 +68,6 @@ class Controller:
         while True:
             data = self.framemodel.read_serial()
             if data:
-                print(data)
                 if(data[1] == 0):
                     self.spotifymodel.skip_to_next_track()
                     self.spotifymodel.get_current_track()
@@ -97,7 +96,10 @@ class Controller:
         self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
         self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
+
         t = time.time()
+        a = time.time()
+
         while True:
             if((time.time() - t) >= 5):
                 self.spotifymodel.get_current_track()
@@ -107,6 +109,13 @@ class Controller:
                 self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
             
                 t = time.time()
+                a = time.time()
+            else: # smaller than 5
+                if(time.time() - a) >= 1:
+                    self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+                    self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+
+                    a = time.time()
 
 if __name__ == '__main__':
     calculator = Controller()

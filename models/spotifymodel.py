@@ -15,6 +15,7 @@ class SpotifyModel:
     SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control' 
 
     allow_skip = time.time()
+    current_track_progress = 0
 
     def __init__(self):
         self.token = util.prompt_for_user_token(username = self.USERNAME, scope = self.SCOPE, client_id = self.CLIENT_ID, client_secret = self.CLIENT_SECRET, redirect_uri = self.REDIRECT_URI)
@@ -28,23 +29,14 @@ class SpotifyModel:
 
     def get_current_track_progress(self):
         time =  int(self.current_track["progress_ms"] / 1000)
-        minutes = str(int(time / 60))
-        seconds = str(time % 60)
-
-        if(len(seconds) == 1):
-            seconds = "0" + seconds
-
-        return minutes + ":" + seconds
+        self.current_track_progress = time
+       
+        return self.convert_to_readable(time)
 
     def get_current_track_duration(self):
         time = int(self.current_track["item"]["duration_ms"] / 1000)
-        minutes = str(int(time / 60))
-        seconds = str(time % 60)
-
-        if(len(seconds) == 1):
-            seconds = "0" + seconds
-
-        return minutes + ":" + seconds
+        
+        return self.convert_to_readable(time)
 
     def get_current_track_artists(self):
         returns = []
@@ -72,3 +64,17 @@ class SpotifyModel:
             self.sp.next_track()
             self.allow_skip = time.time()
 
+    def convert_to_readable(self, ms):
+        minutes = str(int(ms / 60))
+        seconds = str(ms % 60)
+
+        if(len(seconds) == 1):
+            seconds = "0" + seconds
+
+        return minutes + ":" + seconds
+
+    def update_progress(self, value):
+        self.current_track_progress = value
+
+    def print_update_progress(self):
+        return self.current_track_progress
