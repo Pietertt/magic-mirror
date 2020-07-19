@@ -28,10 +28,10 @@ class View(tk.Tk):
         self._make_label(self.time, 30, 380, "black", "white", 50)
         self._make_label(self.seconds, 198, 380, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
 
-        self._make_label(self.current_track, 130, 1500, "black", "white", 18)
-        self._make_label(self.current_artist, 130, 1530, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
-        self._make_label(self.current_device, 130, 1560, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
-        self._make_label(self.current_time, 130, 1590, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_track, 30, 1170, "black", "white", 18)
+        self._make_label(self.current_artist, 30, 1200, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_device, 30, 1230, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_time, 30, 1260, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
         self.make_button()
 
@@ -46,7 +46,7 @@ class View(tk.Tk):
         self.frame.pack()
 
     def make_button(self):
-        self.button = tk.Button(master = self.frame, bg = "white", text = "Klik mij")
+        self.button = tk.Button(master = self.frame, bg = "white", text = "Volgende nummer")
         self.button.place(x = 30, y = 1310)
         
 
