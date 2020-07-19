@@ -1,9 +1,11 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from pprint import pprint
-from time import sleep
 import spotipy.util as util
+from pprint import pprint
+
+from time import sleep
 import os
+import json
 
 class SpotifyModel:
     USERNAME = 'drjzrg9lstsquvizucpgl8knp' 
@@ -16,7 +18,35 @@ class SpotifyModel:
         self.token = util.prompt_for_user_token(username = self.USERNAME, scope = self.SCOPE, client_id = self.CLIENT_ID, client_secret = self.CLIENT_SECRET, redirect_uri = self.REDIRECT_URI)
         self.sp = spotipy.Spotify(auth = self.token)
 
-        self.sp.start_playback(uris=['spotify:track:6gdLoMygLsgktydTQ71b15'])
-    
-if __name__ == '__main__':
-    s = SpotifyModel()
+    def get_current_track(self):
+        self.current_track = self.sp.current_user_playing_track()
+
+    def get_current_track_title(self):
+        return self.current_track["item"]["name"]
+
+    def get_current_track_ms(self):
+        return self.current_track["progress_ms"]
+
+    def get_current_track_duration_ms(self):
+        return self.current_track["item"]["duration_ms"]
+
+    def get_current_track_artists(self):
+        returns = []
+        arists = self.current_track["item"]["artists"]
+        for artist in arists:
+            returns.append(artist["name"])
+        
+        return returns
+
+    def get_current_track_album(self):
+        return self.current_track["item"]["album"]["name"]
+
+    def get_device(self):
+        self.devices = self.sp.devices()["devices"]
+
+    def get_devices_name(self):
+        devices = []
+        for device in self.devices:
+            devices.append(device["name"])
+
+        return devices
