@@ -5,6 +5,7 @@ from tkinter import messagebox as mb
 
 from models.timemodel import TimeModel
 from models.framemodel import FrameModel
+from models.spotifymodel import SpotifyModel
 
 from view import View
 
@@ -12,6 +13,7 @@ class Controller:
     def __init__(self):
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
+        self.spotifymodel = SpotifyModel()
         self.view = View(self)
 
     def main(self):
@@ -23,6 +25,9 @@ class Controller:
 
         frame_thread = threading.Thread(target = self.frame_handler)
         frame_thread.start()
+
+        spotify_thread = threading.Thread(target = self.spotify_handler)
+        spotify_thread.start()
 
         self.view.main()
 
@@ -62,13 +67,42 @@ class Controller:
             if data:
                 print(data)
                 if(data[1] == 0):
-                    self.view._change_label()
-                
-                if(data[1] == 1):
-                    self.view._change_button()
+                    self.spotifymodel.skip_to_next_track()
+    
                 # if(data[0] == 0):
                 #     mb.showinfo("Test", "Test")
+
+    def spotify_handler(self):
+        self.spotifymodel.get_current_track()
+        self.spotifymodel.get_device()
+
+        self.view.current_track.set(self.spotifymodel.get_current_track_title())
+        self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+        self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+
+        t = time.time()
+        while True:
+            if((time.time() - t) >= 5):
+                self.spotifymodel.get_current_track()
+                self.view.current_track.set(self.spotifymodel.get_current_track_title())
+                self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+                self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
 
 if __name__ == '__main__':
     calculator = Controller()
     calculator.main()
+
+
+# if __name__ == '__main__':
+#     s = SpotifyModel()
+#     s.get_current_track()
+#     s.get_device()
+
+#     s.skip_to_next_track()
+
+#     print(s.get_current_track_title())
+#     print(s.get_current_track_ms())
+#     print(s.get_current_track_duration_ms())
+#     print(s.get_current_track_artists())
+#     print(s.get_current_track_album())
+#     print(s.get_devices_name())

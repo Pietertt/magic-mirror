@@ -16,12 +16,20 @@ class View(tk.Tk):
         self.time = tk.StringVar()
         self.seconds = tk.StringVar()
 
+        self.current_track = tk.StringVar()
+        self.current_artist = tk.StringVar()
+        self.current_device = tk.StringVar()
+
         self._make_main_frame()
 
         self._make_label(self.temperature, 790, 380, "black", "white", 50)
         self._make_label(self.date, 30, 340, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
         self._make_label(self.time, 30, 380, "black", "white", 50)
         self._make_label(self.seconds, 198, 380, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
+
+        self._make_label(self.current_track, 130, 1500, "black", "white", 18)
+        self._make_label(self.current_artist, 130, 1530, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_device, 130, 1560, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
         self.make_button()
 

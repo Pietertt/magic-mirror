@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 import spotipy.util as util
 from pprint import pprint
 
-from time import sleep
+import time
 import os
 import json
 
@@ -13,6 +13,8 @@ class SpotifyModel:
     CLIENT_SECRET = os.environ.get("SPOTIPY_CLIENT_SECRET")
     REDIRECT_URI = os.environ.get("SPOTIPY_REDIRECT_URI")
     SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control' 
+
+    allow_skip = time.time()
 
     def __init__(self):
         self.token = util.prompt_for_user_token(username = self.USERNAME, scope = self.SCOPE, client_id = self.CLIENT_ID, client_secret = self.CLIENT_SECRET, redirect_uri = self.REDIRECT_URI)
@@ -48,5 +50,11 @@ class SpotifyModel:
         devices = []
         for device in self.devices:
             devices.append(device["name"])
-
+        
         return devices
+
+    def skip_to_next_track(self):
+        if((time.time() - self.allow_skip) > 5):
+            self.sp.next_track()
+            self.allow_skip = time.time()
+
