@@ -28,17 +28,23 @@ class SpotifyModel:
 
     def get_current_track_progress(self):
         time =  int(self.current_track["progress_ms"] / 1000)
-        minutes = int(time / 60)
-        seconds = time % 60
+        minutes = str(int(time / 60))
+        seconds = str(time % 60)
 
-        return str(minutes) + ":" + str(seconds)
+        if(len(seconds) == 1):
+            seconds = "0" + seconds
+
+        return minutes + ":" + seconds
 
     def get_current_track_duration(self):
         time = int(self.current_track["item"]["duration_ms"] / 1000)
-        minutes = int(time / 60)
-        seconds = time % 60
+        minutes = str(int(time / 60))
+        seconds = str(time % 60)
 
-        return str(minutes) + ":" + str(seconds)
+        if(len(seconds) == 1):
+            seconds = "0" + seconds
+
+        return minutes + ":" + seconds
 
     def get_current_track_artists(self):
         returns = []

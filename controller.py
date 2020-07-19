@@ -63,13 +63,27 @@ class Controller:
             t = time.time()
 
     def frame_handler(self):
+        t = time.time()
+        
         while True:
             data = self.framemodel.read_serial()
-            self.view.temperature.set(self.framemodel.get_temperature())
             if data:
                 print(data)
                 if(data[1] == 0):
                     self.spotifymodel.skip_to_next_track()
+                    self.spotifymodel.get_current_track()
+                    self.spotifymodel.get_device()
+
+                    self.view.current_track.set(self.spotifymodel.get_current_track_title())
+                    self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+                    self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+                    self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+
+
+            
+            if(time.time() - t) >= 5:
+                self.view.temperature.set(self.framemodel.get_temperature())
+                t = time.time()
     
                 # if(data[0] == 0):
                 #     mb.showinfo("Test", "Test")
