@@ -4,7 +4,6 @@ import tkinter
 from tkinter import messagebox as mb
 
 from models.timemodel import TimeModel
-from models.sensormodel import SensorModel 
 from models.framemodel import FrameModel
 
 from view import View
@@ -12,7 +11,6 @@ from view import View
 class Controller:
     def __init__(self):
         self.timemodel = TimeModel()
-        self.sensormodel = SensorModel()
         self.framemodel = FrameModel()
         self.view = View(self)
 
