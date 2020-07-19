@@ -60,6 +60,8 @@ class Controller:
             if((time.time() - t >= 0.5) and (time.time() - t <= 1)):
                 self.sensormodel.set_led(0)
 
+            t = time.time()
+
     def frame_handler(self):
         while True:
             data = self.framemodel.read_serial()
@@ -79,6 +81,7 @@ class Controller:
         self.view.current_track.set(self.spotifymodel.get_current_track_title())
         self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
         self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+        self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
         t = time.time()
         while True:
@@ -87,6 +90,9 @@ class Controller:
                 self.view.current_track.set(self.spotifymodel.get_current_track_title())
                 self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
                 self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+                self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+            
+                t = time.time()
 
 if __name__ == '__main__':
     calculator = Controller()

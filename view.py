@@ -19,6 +19,7 @@ class View(tk.Tk):
         self.current_track = tk.StringVar()
         self.current_artist = tk.StringVar()
         self.current_device = tk.StringVar()
+        self.current_time = tk.StringVar()
 
         self._make_main_frame()
 
@@ -30,6 +31,7 @@ class View(tk.Tk):
         self._make_label(self.current_track, 130, 1500, "black", "white", 18)
         self._make_label(self.current_artist, 130, 1530, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
         self._make_label(self.current_device, 130, 1560, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_time, 130, 1590, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
         self.make_button()
 
