@@ -34,14 +34,14 @@ class View(tk.Tk):
         self._make_label(self.current_device, 30, 1230, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
         self._make_label(self.current_time, 30, 1260, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
-        load = Image.open("assets/images/next.png")
+        load = Image.open("assets/images/pause.png")
         render = ImageTk.PhotoImage(load)
 
-        img = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        img.image = render
-        img.place(x= 30, y= 1310)
+        self.pause = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        self.pause.image = render
+        self.pause.place(x= 30, y= 1310)
 
-        load = Image.open("assets/images/heart.png")
+        load = Image.open("assets/images/next.png")
         render = ImageTk.PhotoImage(load)
 
         img = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
@@ -63,11 +63,11 @@ class View(tk.Tk):
         self.label.config(font = ("Helvetica", fontsize), fg = foregroundcolor)
         self.label.place(x = x, y = y)
 
-    def _change_label(self):
-        self.button.config(bg = "red")
+    def _pause_button_pause(self):
+        self.pause.config(bg = "red")
     
-    def _change_button(self):
-        self.button.config(bg = "white")
+    def _pause_button_play(self):
+        self.pause.config(bg = "white")
 
     def _enlarge_window(self):
         self.update()

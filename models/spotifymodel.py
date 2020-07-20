@@ -15,7 +15,10 @@ class SpotifyModel:
     SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control' 
 
     allow_skip = time.time()
+    allow_pause = time.time()
     current_track_progress = 0
+
+    track_paused = False
 
     def __init__(self):
         self.token = util.prompt_for_user_token(username = self.USERNAME, scope = self.SCOPE, client_id = self.CLIENT_ID, client_secret = self.CLIENT_SECRET, redirect_uri = self.REDIRECT_URI)
@@ -63,6 +66,19 @@ class SpotifyModel:
         if((time.time() - self.allow_skip) > 5):
             self.sp.next_track()
             self.allow_skip = time.time()
+            self.track_paused = False
+
+    def pause_current_track(self):
+        if((time.time() - self.allow_pause) > 5):
+            if(self.track_paused == True):
+                self.sp.start_playback()
+                self.allow_pause = time.time()
+                self.track_paused = False
+            else:
+                self.sp.pause_playback()
+                self.allow_pause = time.time()
+                self.track_paused = True
+
 
     def convert_to_readable(self, ms):
         minutes = str(int(ms / 60))
