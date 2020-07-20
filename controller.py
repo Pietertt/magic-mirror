@@ -116,8 +116,9 @@ class Controller:
                 a = time.time()
             else: # smaller than 5
                 if(time.time() - a) >= 1:
-                    self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
-                    self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+                    if(self.spotifymodel.track_paused == False):
+                        self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+                        self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
                     a = time.time()
 

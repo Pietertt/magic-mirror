@@ -1,2 +1,4 @@
 __pycache__
 env_vars.sh
+*.gif
+*.png
