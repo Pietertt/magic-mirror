@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
 
 class View(tk.Tk):
 
@@ -33,7 +34,19 @@ class View(tk.Tk):
         self._make_label(self.current_device, 30, 1230, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
         self._make_label(self.current_time, 30, 1260, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
-        self.make_button()
+        load = Image.open("assets/images/next.png")
+        render = ImageTk.PhotoImage(load)
+
+        img = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        img.image = render
+        img.place(x= 30, y= 1310)
+
+        load = Image.open("assets/images/heart.png")
+        render = ImageTk.PhotoImage(load)
+
+        img = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        img.image = render
+        img.place(x= 90, y= 1310)
 
         self._enlarge_window()
 
@@ -44,11 +57,6 @@ class View(tk.Tk):
         self.frame = tk.Frame(self)
         self.frame.config(bg = "black", width = 1016, height = 1856)
         self.frame.pack()
-
-    def make_button(self):
-        self.button = tk.Button(master = self.frame, bg = "white", text = "Volgende nummer")
-        self.button.place(x = 30, y = 1310)
-        
 
     def _make_label(self, variable, x, y, backgroundcolor, foregroundcolor, fontsize):
         self.label = tk.Label(master = self.frame, bg = backgroundcolor, textvariable = variable)

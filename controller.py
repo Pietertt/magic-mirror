@@ -68,15 +68,19 @@ class Controller:
         while True:
             data = self.framemodel.read_serial()
             if data:
-                if(data[1] == 0):
-                    self.spotifymodel.skip_to_next_track()
-                    self.spotifymodel.get_current_track()
-                    self.spotifymodel.get_device()
 
-                    self.view.current_track.set(self.spotifymodel.get_current_track_title())
-                    self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-                    self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-                    self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+                if((data[1] == 0) and (data[2] == 0)):
+                    print("Next track")
+                elif((data[1] == 0) and (data[3] == 0)):
+                    print("Liked")
+                    # self.spotifymodel.skip_to_next_track()
+                    # self.spotifymodel.get_current_track()
+                    # self.spotifymodel.get_device()
+
+                    # self.view.current_track.set(self.spotifymodel.get_current_track_title())
+                    # self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+                    # self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+                    # self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
 
             
