@@ -15,6 +15,8 @@ class Controller:
 
     time_timer = time.time()
     temperature_timer = time.time()
+    spotify_timer = time.time()
+    current_track_timer = time.time()
 
     def __init__(self):
         self.timemodel = TimeModel()
@@ -37,43 +39,20 @@ class Controller:
 
         self.view.main()
 
-    def time_handler(self):
-        self.view.seconds.set(self.timemodel.get_current_second())
-        self.view.time.set(self.timemodel.get_current_time())
-        self.view.date.set(self.timemodel.get_current_date())
-
-        t = time.time()
-        while True:
-            if(time.time() - t >= 1):
-                self.view.seconds.set(self.timemodel.get_current_second())
-                self.view.time.set(self.timemodel.get_current_time())
-                self.view.date.set(self.timemodel.get_current_date())
-
-                t = time.time()
-
-    def temperature_handler(self):
-        self.view.temperature.set(self.sensormodel.get_temperature())
-
-        t = time.time()
-        while True:
-            if(time.time() - t >= 5):
-                self.view.temperature.set(self.sensormodel.get_temperature())
-                t = time.time()
-
-            if((time.time() - t >= 0) and (time.time() - t <= 0.5)):
-                self.sensormodel.set_led(1)
-
-            if((time.time() - t >= 0.5) and (time.time() - t <= 1)):
-                self.sensormodel.set_led(0)
-
-            t = time.time()
-
     def frame_handler(self):
         t = time.time()
 
         self.view.seconds.set(self.timemodel.get_current_second())
         self.view.time.set(self.timemodel.get_current_time())
         self.view.date.set(self.timemodel.get_current_date())
+
+        self.spotifymodel.get_current_track()
+        self.spotifymodel.get_device()
+
+        self.view.current_track.set(self.spotifymodel.get_current_track_title())
+        self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+        self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+        self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
         
         while True:
             data = self.framemodel.read_serial()
@@ -98,6 +77,23 @@ class Controller:
             if((time.time() - self.previous_timer_2) >= 1):
                 self.view.test1()
 
+            if((time.time() - self.spotify_timer) >= 5):
+                self.spotifymodel.get_current_track()
+                self.view.current_track.set(self.spotifymodel.get_current_track_title())
+                self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+                self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+                self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+            
+                self.spotify_timer = time.time()
+                self.current_track_timer = time.time()
+            else: # smaller than 5
+                if(time.time() - self.current_track_timer) >= 1:
+                    if(self.spotifymodel.track_paused == False):
+                        self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+                        self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+
+                    self.current_track_timer = time.time()
+
                     
 
             
@@ -118,9 +114,6 @@ class Controller:
 
 
             
-            if(time.time() - t) >= 5:
-                self.view.temperature.set(self.framemodel.get_temperature())
-                t = time.time()
     
                 # if(data[0] == 0):
                 #     mb.showinfo("Test", "Test")
