@@ -2,7 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+import time
+
 class View(tk.Tk):
+
+    t = time.time()
 
     def __init__(self, controller):
         super().__init__()
@@ -37,28 +41,48 @@ class View(tk.Tk):
         self._make_label(self.current_device, 40, 1355, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
         self._make_label(self.current_time, 40, 1385, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
-        load = Image.open("assets/images/previous.png")
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/previous.png")
         render = ImageTk.PhotoImage(load)
 
         self.previous = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
         self.previous.image = render
         self.previous.place(x= 40, y= 1435)
 
-        load = Image.open("assets/images/pause.png")
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/pause.png")
         render = ImageTk.PhotoImage(load)
 
         self.pause = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
         self.pause.image = render
-        self.pause.place(x= 102, y= 1435)
+        self.pause.place(x= 103, y= 1435)
 
-        load = Image.open("assets/images/next.png")
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/next.png")
         render = ImageTk.PhotoImage(load)
 
         self.next = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
         self.next.image = render
         self.next.place(x= 160, y= 1435)
 
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/heart.png")
+        render = ImageTk.PhotoImage(load)
+
+        self.like = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        self.like.image = render
+        self.like.place(x= 220, y= 1435)
+
         self._enlarge_window()
+
+    def test(self):
+        print("Test called")
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/previous.png")
+        render = ImageTk.PhotoImage(load)
+        self.previous.config(image = render)
+        self.previous.image = render
+
+    def test1(self):
+        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/previous.png")
+        render = ImageTk.PhotoImage(load)
+        self.previous.config(image = render)
+        self.previous.image = render
 
     def main(self):
         self.mainloop()

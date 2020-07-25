@@ -10,6 +10,12 @@ from models.spotifymodel import SpotifyModel
 from view import View
 
 class Controller:
+    previous_timer_1 = time.time()
+    previous_timer_2 = time.time()
+
+    time_timer = time.time()
+    temperature_timer = time.time()
+
     def __init__(self):
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
@@ -17,8 +23,8 @@ class Controller:
         self.view = View(self)
 
     def main(self):
-        time_thread = threading.Thread(target = self.time_handler)
-        time_thread.start()
+        # time_thread = threading.Thread(target = self.time_handler)
+        # time_thread.start()
 
         # temperature_thread = threading.Thread(target = self.temperature_handler)
         # temperature_thread.start()
@@ -26,8 +32,8 @@ class Controller:
         frame_thread = threading.Thread(target = self.frame_handler)
         frame_thread.start()
 
-        spotify_thread = threading.Thread(target = self.spotify_handler)
-        spotify_thread.start()
+        # spotify_thread = threading.Thread(target = self.spotify_handler)
+        # spotify_thread.start()
 
         self.view.main()
 
@@ -64,16 +70,43 @@ class Controller:
 
     def frame_handler(self):
         t = time.time()
+
+        self.view.seconds.set(self.timemodel.get_current_second())
+        self.view.time.set(self.timemodel.get_current_time())
+        self.view.date.set(self.timemodel.get_current_date())
         
         while True:
             data = self.framemodel.read_serial()
-            print(data)
             if data:
-                pass
-                # if((data[1] == 0) and (data[2] == 0)):
-                #     self.spotifymodel.pause_current_track()
-                # elif((data[1] == 0) and (data[3] == 0)):
-                #     self.spotifymodel.skip_to_next_track()
+                if((data[3] < 500) and (data[4] < 500)):
+                    if((time.time() - self.previous_timer_1) >= 2):
+                        self.view.test()
+                        self.previous_timer_1 = time.time()
+                        self.previous_timer_2 = time.time()
+
+                if((time.time() - self.temperature_timer) >= 5):
+                    self.view.temperature.set(self.framemodel.get_temperature())
+                    self.temperature_timer = time.time()
+
+            if((time.time() - self.time_timer) >= 1):
+                self.view.seconds.set(self.timemodel.get_current_second())
+                self.view.time.set(self.timemodel.get_current_time())
+                self.view.date.set(self.timemodel.get_current_date())
+
+                self.time_timer = time.time()
+
+            if((time.time() - self.previous_timer_2) >= 1):
+                self.view.test1()
+
+                    
+
+            
+                # if((data[3] == 1) and (data[4] == 1)):
+                #     self.view.test1()
+                # else:
+                #     #self.view.test1()
+                #     pass
+                    #self.spotifymodel.pause_current_track()
                     
                 #     self.spotifymodel.get_current_track()
                 #     self.spotifymodel.get_device()
