@@ -56,7 +56,7 @@ class View(tk.Tk):
         self.next.image = file
         self.next.place(x= 160, y= 1435)
 
-        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/heart.png"))
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/coffee.png"))
         self.like = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
         self.like.image = file
         self.like.place(x= 220, y= 1435)

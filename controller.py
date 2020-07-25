@@ -16,6 +16,9 @@ class Controller:
     next_timer_1 = time.time()
     next_timer_2 = time.time()
 
+    add_to_coffee_playlist_timer_1 = time.time()
+    add_to_coffee_playlist_timer_2 = time.time()
+
     time_timer = time.time()
     temperature_timer = time.time()
     spotify_timer = time.time()
@@ -95,6 +98,11 @@ class Controller:
                         self.update_spotify_data()
 
                         self.next_boolean = True
+
+                if((data[4] < 200) and (data[3] > 200) and (data[2] > 200)):
+                    if((time.time() - self.add_to_coffee_playlist_timer_1) >= 1.5):
+                        self.spotifymodel.add_to_coffee_playlist()
+                        self.add_to_coffee_playlist_timer_1 = time.time()
 
             # Make the previous number white again
             if((time.time() - self.previous_timer_2) >= 1.5):

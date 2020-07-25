@@ -27,6 +27,10 @@ class SpotifyModel:
     def get_current_track(self):
         self.current_track = self.sp.current_user_playing_track()
 
+    def get_current_track_uri(self):
+        uri = self.current_track["item"]["uri"]
+        return uri.split(":")[2]
+
     def get_current_track_title(self):
         return self.current_track["item"]["name"]
 
@@ -51,6 +55,13 @@ class SpotifyModel:
 
     def get_current_track_album(self):
         return self.current_track["item"]["album"]["name"]
+
+    def add_to_coffee_playlist(self):
+        self.sp.user_playlist_add_tracks(self.get_user_id(), "7jePUsA2BijbH2h7kXBSvD", [self.get_current_track_uri()])
+
+    def get_user_id(self):
+        user = self.sp.current_user()
+        return user["id"]
 
     def get_device(self):
         self.devices = self.sp.devices()["devices"]
