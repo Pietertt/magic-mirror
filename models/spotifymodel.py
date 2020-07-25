@@ -63,10 +63,10 @@ class SpotifyModel:
         return devices
 
     def skip_to_next_track(self):
-        if((time.time() - self.allow_skip) > 1):
-            self.sp.next_track()
-            self.allow_skip = time.time()
-            self.track_paused = False
+        self.sp.next_track()
+
+    def skip_to_previous_track(self):
+        self.sp.previous_track()
 
     def pause_current_track(self):
         if((time.time() - self.allow_pause) > 1):

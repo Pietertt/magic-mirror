@@ -57,16 +57,25 @@ class Controller:
         while True:
             data = self.framemodel.read_serial()
             if data:
+
+                # Previous button
                 if((data[3] < 500) and (data[4] < 500)):
                     if((time.time() - self.previous_timer_1) >= 2):
                         self.view.test()
                         self.previous_timer_1 = time.time()
                         self.previous_timer_2 = time.time()
+                        self.spotifymodel.skip_to_previous_track()
+                        self.update_spotify_data()
 
                 if((time.time() - self.temperature_timer) >= 5):
                     self.view.temperature.set(self.framemodel.get_temperature())
                     self.temperature_timer = time.time()
 
+            # Make the previous number white again
+            if((time.time() - self.previous_timer_2) >= 1):
+                self.view.test1()
+
+            # Update the time every second
             if((time.time() - self.time_timer) >= 1):
                 self.view.seconds.set(self.timemodel.get_current_second())
                 self.view.time.set(self.timemodel.get_current_time())
@@ -74,18 +83,12 @@ class Controller:
 
                 self.time_timer = time.time()
 
-            if((time.time() - self.previous_timer_2) >= 1):
-                self.view.test1()
-
+            # Refresh the Spotify data every 5 seconds
             if((time.time() - self.spotify_timer) >= 5):
-                self.spotifymodel.get_current_track()
-                self.view.current_track.set(self.spotifymodel.get_current_track_title())
-                self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-                self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-                self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-            
+                self.update_spotify_data()
                 self.spotify_timer = time.time()
                 self.current_track_timer = time.time()
+
             else: # smaller than 5
                 if(time.time() - self.current_track_timer) >= 1:
                     if(self.spotifymodel.track_paused == False):
@@ -117,6 +120,13 @@ class Controller:
     
                 # if(data[0] == 0):
                 #     mb.showinfo("Test", "Test")
+
+    def update_spotify_data(self):
+        self.spotifymodel.get_current_track()
+        self.view.current_track.set(self.spotifymodel.get_current_track_title())
+        self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
+        self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
+        self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
     def spotify_handler(self):
         self.spotifymodel.get_current_track()
