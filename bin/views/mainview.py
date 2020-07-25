@@ -8,16 +8,9 @@ class MainView():
 
     t = time.time()
 
-    def __init__(self, controller, frame):
+    def __init__(self, frame):
 
-        self.controller = controller
         self.frame = frame
-        print(self.frame)
-
-        self.title("Magic Mirror")
-
-        self.wm_attributes('-type', 'splash')
-
 
         self.temperature = tk.StringVar()
         self.date = tk.StringVar()
@@ -72,7 +65,7 @@ class MainView():
         self.dot2.image = file
         self.dot2.place(x= 550, y= 1500)
 
-        self._enlarge_window()
+        #self._enlarge_window()
 
     def white(self, button, image):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))
@@ -94,7 +87,3 @@ class MainView():
     
     def _pause_button_play(self):
         self.pause.config(bg = "white")
-
-    def _enlarge_window(self):
-        self.update()
-        self.geometry(str(1016) + "x" + str(1856) + "+0+0")
