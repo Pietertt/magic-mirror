@@ -26,6 +26,7 @@ class Controller:
 
     previous_boolean = False
     next_boolean = False
+    add_coffee_boolean = False
 
     def __init__(self):
         self.timemodel = TimeModel()
@@ -101,8 +102,15 @@ class Controller:
 
                 if((data[4] < 200) and (data[3] > 200) and (data[2] > 200)):
                     if((time.time() - self.add_to_coffee_playlist_timer_1) >= 1.5):
+
+                        self.view.grayscale(self.view.coffee, "coffee.png")
+
                         self.spotifymodel.add_to_coffee_playlist()
                         self.add_to_coffee_playlist_timer_1 = time.time()
+
+                        self.add_to_coffee_playlist_timer_2 = time.time()
+
+                        self.add_coffee_boolean = True
 
             # Make the previous number white again
             if((time.time() - self.previous_timer_2) >= 1.5):
@@ -116,6 +124,12 @@ class Controller:
                     self.view.white(self.view.next, "next.png")
                     self.next_boolean = False
                     self.next_timer_2 = time.time()
+
+            if((time.time() - self.add_to_coffee_playlist_timer_2) >= 1.5):
+                if(self.add_coffee_boolean == True):
+                    self.view.white(self.view.coffee, "coffee.png")
+                    self.add_coffee_boolean = False
+                    self.add_to_coffee_playlist_timer_2 = time.time()
 
             if((time.time() - self.temperature_timer) >= 5):
                 # Get the most recent temperature from the model
