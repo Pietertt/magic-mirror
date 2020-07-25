@@ -7,6 +7,7 @@ import threading
 from controllers.controller import Controller
 
 from views.mainview import MainView
+from views.secondview import SecondView
 
 from models.timemodel import TimeModel
 from models.framemodel import FrameModel
@@ -38,19 +39,19 @@ class Main(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        frame = tk.Frame()
+        self.frame = tk.Frame()
         self.title("Magic Mirror")
 
         self.wm_attributes('-type', 'splash')
 
-        frame.config(bg = "black", width = 1016, height = 1856)
-        frame.pack()
+        self.frame.config(bg = "black", width = 1016, height = 1856)
+        self.frame.pack()
 
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
         self.spotifymodel = SpotifyModel()
 
-        self.view = MainView(frame)
+        self.view = MainView(self.frame)
         self.view.render()
 
         frame_thread = threading.Thread(target = self.loop)
@@ -125,6 +126,7 @@ class Main(tk.Tk):
                             self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
                         self.current_track_timer = time.time()
+
                 data = self.framemodel.read_serial()
                 if data:
                     print(data)
@@ -173,15 +175,41 @@ class Main(tk.Tk):
                             self.add_coffee_boolean = True
 
                     if(data[1] < 250):
+                        self.view.remove_all_widgets()
+                        self.view = MainView(self.frame)
+                        self.view.render()
                         self.current_view = "main_view"
 
                     if(data[0] < 250):
                         self.view.remove_all_widgets()
+                        self.view = SecondView(self.frame)
+                        self.view.render()
                         self.current_view = "second_view"
 
             if(self.current_view == "second_view"):
-                print("Test")
-                time.sleep(1000)
+                # Update the time every second
+                if((time.time() - self.time_timer) >= 1):
+                    self.view.seconds.set(self.timemodel.get_current_second())
+                    self.view.time.set(self.timemodel.get_current_time())
+                    self.view.date.set(self.timemodel.get_current_date())
+
+                    self.time_timer = time.time()
+
+                data = self.framemodel.read_serial()
+                if data:
+                    print(data)
+
+                    if(data[1] < 250):
+                        self.view.remove_all_widgets()
+                        self.view = MainView(self.frame)
+                        self.view.render()
+                        self.current_view = "main_view"
+
+                    if(data[0] < 250):
+                        self.view.remove_all_widgets()
+                        self.view = SecondView(self.frame)
+                        self.view.render()
+                        self.current_view = "second_view"
 
         
 
