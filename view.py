@@ -11,6 +11,8 @@ class View(tk.Tk):
 
         self.title("Magic Mirror")
 
+        self.wm_attributes('-type', 'splash')
+
 
         self.temperature = tk.StringVar()
         self.date = tk.StringVar()
@@ -24,29 +26,37 @@ class View(tk.Tk):
 
         self._make_main_frame()
 
-        self._make_label(self.temperature, 790, 380, "black", "white", 50)
-        self._make_label(self.date, 30, 340, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
-        self._make_label(self.time, 30, 380, "black", "white", 50)
-        self._make_label(self.seconds, 198, 380, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
+        self._make_label(self.temperature, 690, 140, "black", "white", 50)
 
-        self._make_label(self.current_track, 30, 1170, "black", "white", 18)
-        self._make_label(self.current_artist, 30, 1200, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
-        self._make_label(self.current_device, 30, 1230, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
-        self._make_label(self.current_time, 30, 1260, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.date, 120, 100, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
+        self._make_label(self.time, 120, 140, "black", "white", 50)
+        self._make_label(self.seconds, 288, 140, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
+
+        self._make_label(self.current_track, 40, 1295, "black", "white", 18)
+        self._make_label(self.current_artist, 40, 1325, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_device, 40, 1355, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+        self._make_label(self.current_time, 40, 1385, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
+
+        load = Image.open("assets/images/previous.png")
+        render = ImageTk.PhotoImage(load)
+
+        self.previous = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        self.previous.image = render
+        self.previous.place(x= 40, y= 1435)
 
         load = Image.open("assets/images/pause.png")
         render = ImageTk.PhotoImage(load)
 
         self.pause = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
         self.pause.image = render
-        self.pause.place(x= 30, y= 1310)
+        self.pause.place(x= 102, y= 1435)
 
         load = Image.open("assets/images/next.png")
         render = ImageTk.PhotoImage(load)
 
-        img = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        img.image = render
-        img.place(x= 90, y= 1310)
+        self.next = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
+        self.next.image = render
+        self.next.place(x= 160, y= 1435)
 
         self._enlarge_window()
 
