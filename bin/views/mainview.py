@@ -22,8 +22,6 @@ class MainView():
         self.current_device = tk.StringVar()
         self.current_time = tk.StringVar()
 
-        #self._make_main_frame()
-
         self._make_label(self.temperature, 690, 140, "black", "white", 50)
 
         self._make_label(self.date, 120, 100, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
@@ -64,8 +62,6 @@ class MainView():
         self.dot2 = tk.Label(self.frame, image = file, borderwidth = 0, highlightthickness = 0)
         self.dot2.image = file
         self.dot2.place(x= 550, y= 1500)
-
-        #self._enlarge_window()
 
     def white(self, button, image):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))

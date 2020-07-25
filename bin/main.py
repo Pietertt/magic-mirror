@@ -31,6 +31,8 @@ class Main(tk.Tk):
     next_boolean = False
     add_coffee_boolean = False
 
+    current_view = "main_view"
+
     def __init__(self):
         super().__init__()
 
@@ -71,107 +73,113 @@ class Main(tk.Tk):
         self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
         while True:
-            data = self.framemodel.read_serial()
-            if data:
-                print(data)
-                # Previous button
-                if((data[3] < 250) and (data[4] < 250)):
-                    if((time.time() - self.previous_timer_1) >= 1.5):
+            if(self.current_view == "main_view"):
 
-                        # Grayscale the button
-                        self.view.grayscale(self.view.previous, "previous.png")
-
-                        # Previous can only be called every 1.5 second
-                        self.previous_timer_1 = time.time()
-
-                        # A timer for making the previous button white again
+                # Make the previous number white again
+                if((time.time() - self.previous_timer_2) >= 1.5):
+                    if(self.previous_boolean == True):
+                        self.view.white(self.view.previous, "previous.png")
+                        self.previous_boolean = False
                         self.previous_timer_2 = time.time()
-                        self.spotifymodel.skip_to_previous_track()
-                        self.update_spotify_data()
-
-                        self.previous_boolean = True
                 
-                if((data[2] < 250) and (data[4] < 250)):
-                    if((time.time() - self.next_timer_1) >= 1.5):
-                    # Grayscale the button
-                        self.view.grayscale(self.view.next, "next.png")
-
-                        # Next can only be called every 1.5 second
-                        self.next_timer_1 = time.time()
-
-                        # A timer for making the next button white again
+                if((time.time() - self.next_timer_2) >= 1.5):
+                    if(self.next_boolean == True):
+                        self.view.white(self.view.next, "next.png")
+                        self.next_boolean = False
                         self.next_timer_2 = time.time()
-                        self.spotifymodel.skip_to_next_track()
-                        self.update_spotify_data()
 
-                        self.next_boolean = True
-
-                if((data[4] < 250) and (data[3] > 250) and (data[2] > 250)):
-                    if((time.time() - self.add_to_coffee_playlist_timer_1) >= 1.5):
-
-                        self.view.grayscale(self.view.coffee, "coffee.png")
-
-                        self.spotifymodel.add_to_coffee_playlist()
-                        self.add_to_coffee_playlist_timer_1 = time.time()
-
+                if((time.time() - self.add_to_coffee_playlist_timer_2) >= 1.5):
+                    if(self.add_coffee_boolean == True):
+                        self.view.white(self.view.coffee, "coffee.png")
+                        self.add_coffee_boolean = False
                         self.add_to_coffee_playlist_timer_2 = time.time()
 
-                        self.add_coffee_boolean = True
+                if((time.time() - self.temperature_timer) >= 5):
+                    # Get the most recent temperature from the model
+                    self.view.temperature.set(self.framemodel.get_temperature())
 
-                if(data[1] < 250):
-                    print("View 1")
+                    # Reset the timer to zero
+                    self.temperature_timer = time.time()
 
-                if(data[0] < 250):
-                    print("View 2")
+                # Update the time every second
+                if((time.time() - self.time_timer) >= 1):
+                    self.view.seconds.set(self.timemodel.get_current_second())
+                    self.view.time.set(self.timemodel.get_current_time())
+                    self.view.date.set(self.timemodel.get_current_date())
 
-            # Make the previous number white again
-            if((time.time() - self.previous_timer_2) >= 1.5):
-                if(self.previous_boolean == True):
-                    self.view.white(self.view.previous, "previous.png")
-                    self.previous_boolean = False
-                    self.previous_timer_2 = time.time()
-            
-            if((time.time() - self.next_timer_2) >= 1.5):
-                if(self.next_boolean == True):
-                    self.view.white(self.view.next, "next.png")
-                    self.next_boolean = False
-                    self.next_timer_2 = time.time()
+                    self.time_timer = time.time()
 
-            if((time.time() - self.add_to_coffee_playlist_timer_2) >= 1.5):
-                if(self.add_coffee_boolean == True):
-                    self.view.white(self.view.coffee, "coffee.png")
-                    self.add_coffee_boolean = False
-                    self.add_to_coffee_playlist_timer_2 = time.time()
+                # Refresh the Spotify data every 5 seconds
+                if((time.time() - self.spotify_timer) >= 5):
+                    self.update_spotify_data()
 
-            if((time.time() - self.temperature_timer) >= 5):
-                # Get the most recent temperature from the model
-                self.view.temperature.set(self.framemodel.get_temperature())
+                # Update the progress timer 
+                else: 
+                    if(time.time() - self.current_track_timer) >= 1:
+                        if(self.spotifymodel.track_paused == False):
+                            # Update the timer with +1
+                            self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+                            # Set the progress timer
+                            self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
-                # Reset the timer to zero
-                self.temperature_timer = time.time()
+                        self.current_track_timer = time.time()
+                data = self.framemodel.read_serial()
+                if data:
+                    print(data)
+                    # Previous button
+                    if((data[3] < 250) and (data[4] < 250)):
+                        if((time.time() - self.previous_timer_1) >= 1.5):
 
-            # Update the time every second
-            if((time.time() - self.time_timer) >= 1):
-                self.view.seconds.set(self.timemodel.get_current_second())
-                self.view.time.set(self.timemodel.get_current_time())
-                self.view.date.set(self.timemodel.get_current_date())
+                            # Grayscale the button
+                            self.view.grayscale(self.view.previous, "previous.png")
 
-                self.time_timer = time.time()
+                            # Previous can only be called every 1.5 second
+                            self.previous_timer_1 = time.time()
 
-            # Refresh the Spotify data every 5 seconds
-            if((time.time() - self.spotify_timer) >= 5):
-                self.update_spotify_data()
+                            # A timer for making the previous button white again
+                            self.previous_timer_2 = time.time()
+                            self.spotifymodel.skip_to_previous_track()
+                            self.update_spotify_data()
 
-            # Update the progress timer 
-            else: 
-                if(time.time() - self.current_track_timer) >= 1:
-                    if(self.spotifymodel.track_paused == False):
-                        # Update the timer with +1
-                        self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
-                        # Set the progress timer
-                        self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+                            self.previous_boolean = True
+                    
+                    if((data[2] < 250) and (data[4] < 250)):
+                        if((time.time() - self.next_timer_1) >= 1.5):
+                        # Grayscale the button
+                            self.view.grayscale(self.view.next, "next.png")
 
-                    self.current_track_timer = time.time()
+                            # Next can only be called every 1.5 second
+                            self.next_timer_1 = time.time()
+
+                            # A timer for making the next button white again
+                            self.next_timer_2 = time.time()
+                            self.spotifymodel.skip_to_next_track()
+                            self.update_spotify_data()
+
+                            self.next_boolean = True
+
+                    if((data[4] < 250) and (data[3] > 250) and (data[2] > 250)):
+                        if((time.time() - self.add_to_coffee_playlist_timer_1) >= 1.5):
+
+                            self.view.grayscale(self.view.coffee, "coffee.png")
+
+                            self.spotifymodel.add_to_coffee_playlist()
+                            self.add_to_coffee_playlist_timer_1 = time.time()
+
+                            self.add_to_coffee_playlist_timer_2 = time.time()
+
+                            self.add_coffee_boolean = True
+
+                    if(data[1] < 250):
+                        self.current_view = "main_view"
+                        print("View 1")
+
+                    if(data[0] < 250):
+                        self.current_view = "second_view"
+                        print("View 2")
+
+            if(self.current_view == "second_view"):
+                print("Test")
 
         
 
