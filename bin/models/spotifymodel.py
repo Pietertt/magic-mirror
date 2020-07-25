@@ -12,7 +12,7 @@ class SpotifyModel:
     CLIENT_ID = os.environ.get("SPOTIPY_CLIENT_ID")
     CLIENT_SECRET = os.environ.get("SPOTIPY_CLIENT_SECRET")
     REDIRECT_URI = os.environ.get("SPOTIPY_REDIRECT_URI")
-    SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control' 
+    SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control, playlist-modify' 
 
     allow_skip = time.time()
     allow_pause = time.time()

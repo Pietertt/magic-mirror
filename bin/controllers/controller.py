@@ -3,11 +3,15 @@ import time
 import tkinter
 from tkinter import messagebox as mb
 
+import sys 
+
+sys.path.append('..')
+
 from models.timemodel import TimeModel
 from models.framemodel import FrameModel
 from models.spotifymodel import SpotifyModel
 
-from view import View
+from views.mainview import MainView
 
 class Controller:
     previous_timer_1 = time.time()
@@ -32,20 +36,12 @@ class Controller:
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
         self.spotifymodel = SpotifyModel()
-        self.view = View(self)
+        self.view = MainView(self)
+        self.current_view = "main"
 
     def main(self):
-        # time_thread = threading.Thread(target = self.time_handler)
-        # time_thread.start()
-
-        # temperature_thread = threading.Thread(target = self.temperature_handler)
-        # temperature_thread.start()
-
         frame_thread = threading.Thread(target = self.frame_handler)
         frame_thread.start()
-
-        # spotify_thread = threading.Thread(target = self.spotify_handler)
-        # spotify_thread.start()
 
         self.view.main()
 
@@ -112,6 +108,12 @@ class Controller:
 
                         self.add_coffee_boolean = True
 
+                if(data[1] < 200):
+                    print("View 1")
+
+                if(data[0] < 200):
+                    print("View 2")
+
             # Make the previous number white again
             if((time.time() - self.previous_timer_2) >= 1.5):
                 if(self.previous_boolean == True):
@@ -161,29 +163,7 @@ class Controller:
 
                     self.current_track_timer = time.time()
 
-                    
-
-            
-                # if((data[3] == 1) and (data[4] == 1)):
-                #     self.view.test1()
-                # else:
-                #     #self.view.test1()
-                #     pass
-                    #self.spotifymodel.pause_current_track()
-                    
-                #     self.spotifymodel.get_current_track()
-                #     self.spotifymodel.get_device()
-
-                #     self.view.current_track.set(self.spotifymodel.get_current_track_title())
-                #     self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-                #     self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-                #     self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-
-
-            
-    
-                # if(data[0] == 0):
-                #     mb.showinfo("Test", "Test")
+        
 
     def update_spotify_data(self):
         self.spotifymodel.get_current_track()
@@ -191,53 +171,3 @@ class Controller:
         self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
         self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
         self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-
-    def spotify_handler(self):
-        self.spotifymodel.get_current_track()
-        self.spotifymodel.get_device()
-
-        self.view.current_track.set(self.spotifymodel.get_current_track_title())
-        self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-        self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-        self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-
-
-        t = time.time()
-        a = time.time()
-
-        while True:
-            if((time.time() - t) >= 5):
-                self.spotifymodel.get_current_track()
-                self.view.current_track.set(self.spotifymodel.get_current_track_title())
-                self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-                self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-                self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-            
-                t = time.time()
-                a = time.time()
-            else: # smaller than 5
-                if(time.time() - a) >= 1:
-                    if(self.spotifymodel.track_paused == False):
-                        self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
-                        self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-
-                    a = time.time()
-
-if __name__ == '__main__':
-    calculator = Controller()
-    calculator.main()
-
-
-# if __name__ == '__main__':
-#     s = SpotifyModel()
-#     s.get_current_track()
-#     s.get_device()
-
-#     s.skip_to_next_track()
-
-#     print(s.get_current_track_title())
-#     print(s.get_current_track_ms())
-#     print(s.get_current_track_duration_ms())
-#     print(s.get_current_track_artists())
-#     print(s.get_current_track_album())
-#     print(s.get_devices_name())

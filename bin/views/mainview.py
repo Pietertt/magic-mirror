@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 
 import time
 
-class View(tk.Tk):
+class MainView(tk.Tk):
 
     t = time.time()
 
@@ -60,6 +60,16 @@ class View(tk.Tk):
         self.coffee = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
         self.coffee.image = file
         self.coffee.place(x= 220, y= 1435)
+
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        self.dot1 = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.dot1.image = file
+        self.dot1.place(x= 470, y= 1500)
+
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        self.dot2 = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.dot2.image = file
+        self.dot2.place(x= 550, y= 1500)
 
         self._enlarge_window()
 
