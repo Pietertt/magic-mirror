@@ -1,17 +1,13 @@
 import tkinter as tk
-from tkinter import ttk
 from PIL import Image, ImageTk
+
+from .view import View
 
 import time
 
-class MainView():
-
-    t = time.time()
-
+class MainView(View):
     def __init__(self, frame):
-
-        self.frame = frame
-
+        View.__init__(self, frame)
         self.temperature = tk.StringVar()
         self.date = tk.StringVar()
         self.time = tk.StringVar()
@@ -21,7 +17,8 @@ class MainView():
         self.current_artist = tk.StringVar()
         self.current_device = tk.StringVar()
         self.current_time = tk.StringVar()
-
+        
+    def render(self):
         self._make_label(self.temperature, 690, 140, "black", "white", 50)
 
         self._make_label(self.date, 120, 100, "black", "#%02x%02x%02x" % (100, 100, 100), 25)
@@ -62,24 +59,3 @@ class MainView():
         self.dot2 = tk.Label(self.frame, image = file, borderwidth = 0, highlightthickness = 0)
         self.dot2.image = file
         self.dot2.place(x= 550, y= 1500)
-
-    def white(self, button, image):
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))
-        button.config(image = file)
-        button.image = file
-
-    def grayscale(self, button, image):
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/" + image))
-        button.config(image = file)
-        button.image = file
-
-    def _make_label(self, variable, x, y, backgroundcolor, foregroundcolor, fontsize):
-        self.label = tk.Label(master = self.frame, bg = backgroundcolor, textvariable = variable)
-        self.label.config(font = ("Helvetica", fontsize), fg = foregroundcolor)
-        self.label.place(x = x, y = y)
-
-    def _pause_button_pause(self):
-        self.pause.config(bg = "red")
-    
-    def _pause_button_play(self):
-        self.pause.config(bg = "white")

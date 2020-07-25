@@ -33,10 +33,11 @@ class Main(tk.Tk):
 
     current_view = "main_view"
 
+    main_view_created = True
+    second_view_created = False
+
     def __init__(self):
         super().__init__()
-
-    def run(self):
         frame = tk.Frame()
         self.title("Magic Mirror")
 
@@ -50,6 +51,7 @@ class Main(tk.Tk):
         self.spotifymodel = SpotifyModel()
 
         self.view = MainView(frame)
+        self.view.render()
 
         frame_thread = threading.Thread(target = self.loop)
         frame_thread.start()
@@ -172,14 +174,14 @@ class Main(tk.Tk):
 
                     if(data[1] < 250):
                         self.current_view = "main_view"
-                        print("View 1")
 
                     if(data[0] < 250):
+                        self.view.remove_all_widgets()
                         self.current_view = "second_view"
-                        print("View 2")
 
             if(self.current_view == "second_view"):
                 print("Test")
+                time.sleep(1000)
 
         
 
