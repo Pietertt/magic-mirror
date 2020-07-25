@@ -1,4 +1,4 @@
-import threading
+
 import time
 import tkinter
 from tkinter import messagebox as mb
@@ -32,21 +32,14 @@ class Controller:
     next_boolean = False
     add_coffee_boolean = False
 
-    def __init__(self):
+    def __init__(self, frame):
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
         self.spotifymodel = SpotifyModel()
-        self.view = MainView(self)
+        self.view = MainView(self, frame)
         self.current_view = "main"
-
-    def main(self):
-        frame_thread = threading.Thread(target = self.frame_handler)
-        frame_thread.start()
-
-        self.view.main()
-
-    def frame_handler(self):
-        t = time.time()
+        
+    def execute(self):
 
         self.view.seconds.set(self.timemodel.get_current_second())
         self.view.time.set(self.timemodel.get_current_time())
