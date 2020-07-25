@@ -18,6 +18,8 @@ class Controller:
     spotify_timer = time.time()
     current_track_timer = time.time()
 
+    previous_boolean = False
+
     def __init__(self):
         self.timemodel = TimeModel()
         self.framemodel = FrameModel()
@@ -60,20 +62,35 @@ class Controller:
 
                 # Previous button
                 if((data[3] < 500) and (data[4] < 500)):
-                    if((time.time() - self.previous_timer_1) >= 2):
-                        self.view.test()
+                    if((time.time() - self.previous_timer_1) >= 1):
+
+                        # Grayscale the button
+                        self.view.grayscale(self.view.previous, "previous.png")
+
+                        # Previous can only be called every 1 second
                         self.previous_timer_1 = time.time()
+
+                        # A timer for making the previous button white again
                         self.previous_timer_2 = time.time()
                         self.spotifymodel.skip_to_previous_track()
                         self.update_spotify_data()
 
-                if((time.time() - self.temperature_timer) >= 5):
-                    self.view.temperature.set(self.framemodel.get_temperature())
-                    self.temperature_timer = time.time()
+                        self.previous_boolean = True
+
+            
+            if((time.time() - self.temperature_timer) >= 5):
+                # Get the most recent temperature from the model
+                self.view.temperature.set(self.framemodel.get_temperature())
+
+                # Reset the timer to zero
+                self.temperature_timer = time.time()
 
             # Make the previous number white again
             if((time.time() - self.previous_timer_2) >= 1):
-                self.view.test1()
+                if(self.previous_boolean == True):
+                    self.view.white(self.view.previous, "previous.png")
+                    self.previous_boolean = False
+                    self.previous_timer_2 = time.time()
 
             # Update the time every second
             if((time.time() - self.time_timer) >= 1):

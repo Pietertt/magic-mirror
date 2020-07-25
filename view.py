@@ -71,18 +71,15 @@ class View(tk.Tk):
 
         self._enlarge_window()
 
-    def test(self):
-        print("Test called")
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/previous.png")
-        render = ImageTk.PhotoImage(load)
-        self.previous.config(image = render)
-        self.previous.image = render
+    def white(self, button, image):
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))
+        button.config(image = file)
+        button.image = file
 
-    def test1(self):
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/previous.png")
-        render = ImageTk.PhotoImage(load)
-        self.previous.config(image = render)
-        self.previous.image = render
+    def grayscale(self, button, image):
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/" + image))
+        button.config(image = file)
+        button.image = file
 
     def main(self):
         self.mainloop()
