@@ -41,32 +41,24 @@ class View(tk.Tk):
         self._make_label(self.current_device, 40, 1355, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
         self._make_label(self.current_time, 40, 1385, "black", "#%02x%02x%02x" % (100, 100, 100), 18)
 
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/previous.png")
-        render = ImageTk.PhotoImage(load)
-
-        self.previous = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        self.previous.image = render
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/previous.png"))
+        self.previous = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.previous.image = file
         self.previous.place(x= 40, y= 1435)
 
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/pause.png")
-        render = ImageTk.PhotoImage(load)
-
-        self.pause = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        self.pause.image = render
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/pause.png"))
+        self.pause = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.pause.image = file
         self.pause.place(x= 103, y= 1435)
 
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/next.png")
-        render = ImageTk.PhotoImage(load)
-
-        self.next = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        self.next.image = render
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/next.png"))
+        self.next = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.next.image = file
         self.next.place(x= 160, y= 1435)
 
-        load = Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/heart.png")
-        render = ImageTk.PhotoImage(load)
-
-        self.like = tk.Label(self, image = render, borderwidth = 0, highlightthickness = 0)
-        self.like.image = render
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/heart.png"))
+        self.like = tk.Label(self, image = file, borderwidth = 0, highlightthickness = 0)
+        self.like.image = file
         self.like.place(x= 220, y= 1435)
 
         self._enlarge_window()
