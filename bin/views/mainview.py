@@ -53,9 +53,14 @@ class MainView(View):
         file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.dot1 = tk.Label(self.frame, image = file, borderwidth = 0, highlightthickness = 0)
         self.dot1.image = file
-        self.dot1.place(x= 470, y= 1500)
+        self.dot1.place(x= 470, y= 1435)
 
         file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.dot2 = tk.Label(self.frame, image = file, borderwidth = 0, highlightthickness = 0)
         self.dot2.image = file
-        self.dot2.place(x= 550, y= 1500)
+        self.dot2.place(x= 510, y= 1435)
+
+        file = image = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        self.dot3 = tk.Label(self.frame, image = file, borderwidth = 0, highlightthickness = 0)
+        self.dot3.image = file
+        self.dot3.place(x= 550, y= 1435)
