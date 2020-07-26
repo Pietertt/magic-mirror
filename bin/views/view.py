@@ -28,3 +28,9 @@ class View():
     def remove_all_widgets(self):
         for widget in self.frame.winfo_children():
             widget.destroy()
+
+    def move_all_widgets(self):
+        for i in range(500):
+            for widget in self.frame.winfo_children():
+                widget.place(x = widget.winfo_rootx() + 3, y = widget.winfo_rooty())
+                time.sleep(0.01)

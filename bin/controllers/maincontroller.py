@@ -13,7 +13,7 @@ from models.spotifymodel import SpotifyModel
 
 from views.mainview import MainView
 
-class Controller:
+class MainController:
     previous_timer_1 = time.time()
     previous_timer_2 = time.time()
 

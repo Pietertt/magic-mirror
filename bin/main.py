@@ -2,9 +2,9 @@ import tkinter as tk
 import time
 from tkinter import ttk
 
-import threading
+from threading import Thread
 
-from controllers.controller import Controller
+from controllers.maincontroller import MainController
 
 from views.mainview import MainView
 from views.secondview import SecondView
@@ -57,15 +57,6 @@ class Main(tk.Tk):
         self.view = MainView(self.frame)
         self.view.render()
 
-        frame_thread = threading.Thread(target = self.loop)
-        frame_thread.start()
-
-        self.update()
-        self.geometry(str(1016) + "x" + str(1856) + "+0+0")
-
-        self.mainloop()
-
-    def loop(self):
         self.view.seconds.set(self.timemodel.get_current_second())
         self.view.time.set(self.timemodel.get_current_time())
         self.view.date.set(self.timemodel.get_current_date())
@@ -79,6 +70,23 @@ class Main(tk.Tk):
         self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
         while True:
+            self.update()
+            data = self.framemodel.read_serial()
+            if data:
+                print(data)
+                if(data[1] < 250):
+                    self.view.grayscale(self.view.dot2, "dot.png")
+                    self.after(1500, lambda: self.view.white(self.view.dot2, "dot.png"))
+                    #self.view.move_all_widgets()
+                    # self.view.remove_all_widgets()
+                    # self.view = MainView(self.frame)
+                    # self.view.render()
+                    # self.current_view = "main_view"
+
+                if(data[0] < 250):
+                    pass
+                    #self.view.white(self.view.dot2, "dot.png")
+
         #     if(self.current_view == "main_view"):
 
             # Make the previous number white again
@@ -130,9 +138,24 @@ class Main(tk.Tk):
 
             #         self.current_track_timer = time.time()
 
-            data = self.framemodel.read_serial()
-            if data:
-                print(data)
+            # data = self.framemodel.read_serial()
+            # if data:
+            #     print(data)
+            #     if(data[1] < 250):
+            #         print("View 1")
+            #         #self.view.move_all_widgets()
+            #         # self.view.remove_all_widgets()
+            #         # self.view = MainView(self.frame)
+            #         # self.view.render()
+            #         # self.current_view = "main_view"
+
+            #     if(data[0] < 250):
+            #         print("View 2")
+            #self.view.move_all_widgets()
+            # self.view.remove_all_widgets()
+            # self.view = SecondView(self.frame)
+            # self.view.render()
+            # self.current_view = "second_view"
                 # # Previous button
                 # if((data[3] < 250) and (data[4] < 250)):
                 #     if((time.time() - self.previous_timer_1) >= 1.5):
@@ -179,20 +202,6 @@ class Main(tk.Tk):
 
                             #self.add_coffee_boolean = True
 
-                    # if(data[1] < 250):
-                    #         self.view.move_all_widgets()
-                    #     # self.view.remove_all_widgets()
-                    #     # self.view = MainView(self.frame)
-                    #     # self.view.render()
-                    #     # self.current_view = "main_view"
-
-                    # if(data[0] < 250):
-                    #     self.view.move_all_widgets()
-                    #     # self.view.remove_all_widgets()
-                    #     # self.view = SecondView(self.frame)
-                    #     # self.view.render()
-                    #     # self.current_view = "second_view"
-
             # if(self.current_view == "second_view"):
             #     # Update the time every second
             #     if((time.time() - self.time_timer) >= 1):
@@ -231,4 +240,4 @@ class Main(tk.Tk):
 
 if __name__ == "__main__":
     main = Main()
-    main.run()
+    main.loop()
