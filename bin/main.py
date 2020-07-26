@@ -14,31 +14,11 @@ from models.framemodel import FrameModel
 from models.spotifymodel import SpotifyModel
 
 class Main(tk.Tk):
-    previous_timer_1 = time.time()
-    previous_timer_2 = time.time()
+    
+    cooldown = False
 
-    next_timer_1 = time.time()
-    next_timer_2 = time.time()
-
-    add_to_coffee_playlist_timer_1 = time.time()
-    add_to_coffee_playlist_timer_2 = time.time()
-
-    time_timer = time.time()
-    temperature_timer = time.time()
     spotify_timer = time.time()
-    current_track_timer = time.time()
-
-    first_view_timer_1 = time.time()
-    first_view_timer_2 = time.time()
-
-    previous_boolean = False
-    next_boolean = False
-    add_coffee_boolean = False
-
-    current_view = "main_view"
-
-    main_view_created = True
-    second_view_created = False
+    time_timer = time.time()
 
     def __init__(self):
         super().__init__()
@@ -74,18 +54,53 @@ class Main(tk.Tk):
             data = self.framemodel.read_serial()
             if data:
                 print(data)
-                if(data[1] < 250):
-                    self.view.grayscale(self.view.dot2, "dot.png")
-                    self.after(1500, lambda: self.view.white(self.view.dot2, "dot.png"))
-                    #self.view.move_all_widgets()
-                    # self.view.remove_all_widgets()
-                    # self.view = MainView(self.frame)
-                    # self.view.render()
-                    # self.current_view = "main_view"
 
+                # Dot 1
+                if(data[1] < 250):
+                    if(self.cooldown == False):
+                        self.set_cooldown()
+                        self.view.grayscale(self.view.dot1, "dot.png")
+                        self.after(1500, lambda: self.view.white(self.view.dot1, "dot.png"))
+                        self.after(1500, lambda: self.reset_cooldown())
+
+                # Dot 2
                 if(data[0] < 250):
-                    pass
-                    #self.view.white(self.view.dot2, "dot.png")
+                    if(self.cooldown == False):
+                        self.set_cooldown()
+                        self.view.grayscale(self.view.dot2, "dot.png")
+                        self.after(1500, lambda: self.view.white(self.view.dot2, "dot.png"))
+                        self.after(1500, lambda: self.reset_cooldown())
+
+                # Previous
+                if((data[3] < 250) and (data[4] < 250)):
+                    if(self.cooldown == False):
+                        self.set_cooldown()
+                        self.spotifymodel.skip_to_previous_track()
+                        self.update_spotify_data()
+                        self.view.grayscale(self.view.previous, "previous.png")
+                        self.after(1500, lambda: self.view.white(self.view.previous, "previous.png"))
+                        self.after(1500, lambda: self.reset_cooldown())
+                
+                # Next
+                if((data[2] < 250) and (data[4] < 250)):
+                    if(self.cooldown == False):
+                        self.set_cooldown()
+                        self.spotifymodel.skip_to_next_track()
+                        self.update_spotify_data()
+                        self.view.grayscale(self.view.next, "next.png")
+                        self.after(1500, lambda: self.view.white(self.view.next, "next.png"))
+                        self.after(1500, lambda: self.reset_cooldown())
+
+            if((time.time() - self.spotify_timer) >= 5):
+                self.update_spotify_data()
+                self.view.temperature.set(self.framemodel.get_temperature())
+                self.spotify_timer = time.time()
+
+            if((time.time() - self.time_timer) >= 1):
+                self.view.seconds.set(self.timemodel.get_current_second())
+                self.view.time.set(self.timemodel.get_current_time())
+                self.view.date.set(self.timemodel.get_current_date())
+                self.time_timer = time.time()
 
         #     if(self.current_view == "main_view"):
 
@@ -237,6 +252,12 @@ class Main(tk.Tk):
         self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
         self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
         self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+
+    def set_cooldown(self):
+        self.cooldown = True
+
+    def reset_cooldown(self):
+        self.cooldown = False
 
 if __name__ == "__main__":
     main = Main()
