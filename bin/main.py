@@ -16,6 +16,7 @@ from models.spotifymodel import SpotifyModel
 class Main(tk.Tk):
     
     cooldown = False
+    COOLDOWN_TIME = 1500
 
     spotify_timer = time.time()
     time_timer = time.time()
@@ -60,36 +61,36 @@ class Main(tk.Tk):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         self.view.grayscale(self.view.dot1, "dot.png")
-                        self.after(1500, lambda: self.view.white(self.view.dot1, "dot.png"))
-                        self.after(1500, lambda: self.reset_cooldown())
+                        self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.dot1, "dot.png"))
+                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
                 # Dot 2
                 if(data[0] < 250):
                     if(self.cooldown == False):
                         self.set_cooldown()
-                        self.view.grayscale(self.view.dot2, "dot.png")
-                        self.after(1500, lambda: self.view.white(self.view.dot2, "dot.png"))
-                        self.after(1500, lambda: self.reset_cooldown())
+                        self.view.grayscale(self.view.dot3, "dot.png")
+                        self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.dot3, "dot.png"))
+                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
                 # Previous
                 if((data[3] < 250) and (data[4] < 250)):
                     if(self.cooldown == False):
                         self.set_cooldown()
+                        self.view.grayscale(self.view.previous, "previous.png")
+                        self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.previous, "previous.png"))
+                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                         self.spotifymodel.skip_to_previous_track()
                         self.update_spotify_data()
-                        self.view.grayscale(self.view.previous, "previous.png")
-                        self.after(1500, lambda: self.view.white(self.view.previous, "previous.png"))
-                        self.after(1500, lambda: self.reset_cooldown())
                 
                 # Next
                 if((data[2] < 250) and (data[4] < 250)):
                     if(self.cooldown == False):
                         self.set_cooldown()
+                        self.view.grayscale(self.view.next, "next.png")
+                        self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.next, "next.png"))
+                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                         self.spotifymodel.skip_to_next_track()
                         self.update_spotify_data()
-                        self.view.grayscale(self.view.next, "next.png")
-                        self.after(1500, lambda: self.view.white(self.view.next, "next.png"))
-                        self.after(1500, lambda: self.reset_cooldown())
 
             if((time.time() - self.spotify_timer) >= 5):
                 self.update_spotify_data()
