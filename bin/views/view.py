@@ -15,15 +15,13 @@ class View():
         self.canvas.itemconfigure(item, text = text)
 
 
-    # def white(self, button, image):
-    #     file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))
-    #     button.config(image = file)
-    #     button.image = file
+    def white(self, button, image):
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/" + image))
+        self.canvas.itemconfig(button, image = file)
 
-    # def grayscale(self, button, image):
-    #     file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/" + image))
-    #     button.config(image = file)
-    #     button.image = file
+    def grayscale(self, button, image):
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/" + image))
+        self.canvas.itemconfig(button, image = file)
 
     # def _make_label(self, variable, x, y, backgroundcolor, foregroundcolor, fontsize):
     #     self.label = tk.Label(master = self.frame, bg = backgroundcolor, textvariable = variable)
