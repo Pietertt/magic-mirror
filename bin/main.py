@@ -18,6 +18,12 @@ class Main(tk.Tk):
     cooldown = False
     COOLDOWN_TIME = 1500
 
+    DOT_2_SENSOR = 0
+    DOT_1_SENSOR = 1
+    NEXT_SENSOR = 2
+    PREVIOUS_SENSOR = 3
+    LINE_SENSOR = 4
+
     spotify_timer = time.time()
     time_timer = time.time()
 
@@ -57,7 +63,7 @@ class Main(tk.Tk):
                 print(data)
 
                 # Dot 1
-                if(data[1] < 250):
+                if(data[self.DOT_1_SENSOR] < 300):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         self.view.grayscale(self.view.dot1, "dot.png")
@@ -65,7 +71,7 @@ class Main(tk.Tk):
                         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
                 # Dot 2
-                if(data[0] < 250):
+                if(data[self.DOT_2_SENSOR] < 300):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         self.view.grayscale(self.view.dot3, "dot.png")
@@ -73,24 +79,24 @@ class Main(tk.Tk):
                         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
                 # Previous
-                if((data[3] < 250) and (data[4] < 250)):
+                if((data[self.PREVIOUS_SENSOR] < 300) and (data[self.LINE_SENSOR] < 350)):
                     if(self.cooldown == False):
                         self.set_cooldown()
+                        self.spotifymodel.skip_to_previous_track()
+                        self.update_spotify_data()
                         self.view.grayscale(self.view.previous, "previous.png")
                         self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.previous, "previous.png"))
                         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
-                        self.spotifymodel.skip_to_previous_track()
-                        self.update_spotify_data()
                 
                 # Next
-                if((data[2] < 250) and (data[4] < 250)):
+                if((data[self.NEXT_SENSOR] < 400) and (data[self.LINE_SENSOR] < 450)):
                     if(self.cooldown == False):
                         self.set_cooldown()
+                        self.spotifymodel.skip_to_next_track()
+                        self.update_spotify_data()
                         self.view.grayscale(self.view.next, "next.png")
                         self.after(self.COOLDOWN_TIME, lambda: self.view.white(self.view.next, "next.png"))
                         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
-                        self.spotifymodel.skip_to_next_track()
-                        self.update_spotify_data()
 
             if((time.time() - self.spotify_timer) >= 5):
                 self.update_spotify_data()
