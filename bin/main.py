@@ -43,7 +43,7 @@ class Main(tk.Tk):
 
         self.view = MainView(self.canvas)
         self.view.render()
-        self.current_view = "main"
+        self.current_view = "mainview"
 
         self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
 
@@ -75,7 +75,7 @@ class Main(tk.Tk):
 
                         self.view.clear_canvas()
                         self.view = MainView(self.canvas)
-                        self.current_view = "main"
+                        self.current_view = "mainview"
                         self.view.render()
 
                 # Dot 2
@@ -91,29 +91,29 @@ class Main(tk.Tk):
                         self.current_view = "secondview"
                         self.view.render()
 
-                    if(self.current_view == "main"):
-                        # Previous
-                        if((data[self.PREVIOUS_SENSOR] < 200) and (data[self.LINE_SENSOR] < 200)):
-                            if(self.cooldown == False):
-                                self.set_cooldown()
-                                self.spotifymodel.skip_to_previous_track()
-                                self.update_spotify_data()
-                                self.view.disable_previous_button()
-                                self.after(self.COOLDOWN_TIME, lambda: self.view.enable_previous_button())
-                                self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
-                        
-                        # Next
-                        if((data[self.NEXT_SENSOR] < 250) and (data[self.LINE_SENSOR] < 250)):
-                            if(self.cooldown == False):
-                                self.set_cooldown()
-                                self.spotifymodel.skip_to_next_track()
-                                self.update_spotify_data()
-                                self.view.disable_next_button()
-                                self.after(self.COOLDOWN_TIME, lambda: self.view.enable_next_button())
-                                self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                if(self.current_view == "mainview"):
+                    # Previous
+                    if((data[self.PREVIOUS_SENSOR] < 200) and (data[self.LINE_SENSOR] < 200)):
+                        if(self.cooldown == False):
+                            self.set_cooldown()
+                            self.spotifymodel.skip_to_previous_track()
+                            self.update_spotify_data()
+                            self.view.disable_previous_button()
+                            self.after(self.COOLDOWN_TIME, lambda: self.view.enable_previous_button())
+                            self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                    
+                    # Next
+                    if((data[self.NEXT_SENSOR] < 250) and (data[self.LINE_SENSOR] < 250)):
+                        if(self.cooldown == False):
+                            self.set_cooldown()
+                            self.spotifymodel.skip_to_next_track()
+                            self.update_spotify_data()
+                            self.view.disable_next_button()
+                            self.after(self.COOLDOWN_TIME, lambda: self.view.enable_next_button())
+                            self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
             if((time.time() - self.spotify_timer) >= 5):
-                if(self.current_view == "main"):
+                if(self.current_view == "mainview"):
                     self.update_spotify_data()
                     self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
                 
@@ -123,7 +123,7 @@ class Main(tk.Tk):
                 pass
 
             if((time.time() - self.time_timer) >= 1):
-                if(self.current_view == "main"):
+                if(self.current_view == "mainview"):
                     # Update the spotify timer with +1
                     self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
 

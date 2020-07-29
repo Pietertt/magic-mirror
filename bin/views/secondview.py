@@ -18,6 +18,8 @@ class SecondView(View):
         self.time = self.canvas.create_text(120, 200, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="sw")
         self.seconds = self.canvas.create_text(288, 170, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
+        self.view2 = self.canvas.create_text(120, 500, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), text = "View 2", anchor="sw")
+
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot1 = file
         self.dot1 = self.canvas.create_image(470, 1475, image = file, anchor = "sw")
