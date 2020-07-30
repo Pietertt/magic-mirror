@@ -12,6 +12,12 @@ class InternetModel:
         file = open("/home/pi/Desktop/magic-mirror/bin/ip.txt", "r")
         return file.read().rstrip("\n")
 
+    def get_wifi_name(self):
+        ip = os.system("iwgetid -r > wifi.txt")
+        file = open("/home/pi/Desktop/magic-mirror/bin/wifi.txt", "r")
+        return file.read().rstrip("\n")
+
+
     def execute_speed_test(self):
         file = open("/home/pi/Desktop/magic-mirror/bin/speed.txt", "r")
         lines = file.readlines() 

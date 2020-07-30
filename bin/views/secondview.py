@@ -18,7 +18,7 @@ class SecondView(View):
         self.time = self.canvas.create_text(120, 200, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="sw")
         self.seconds = self.canvas.create_text(288, 170, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
-        self.internet = self.canvas.create_text(180, 260, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), text = "Invictus hotspot", anchor="sw")
+        self.internet = self.canvas.create_text(180, 260, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.download_text = self.canvas.create_text(205, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.upload_text = self.canvas.create_text(340, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.ping_text = self.canvas.create_text(475, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
