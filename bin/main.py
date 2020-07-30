@@ -21,8 +21,7 @@ class Main(tk.Tk):
     DOT_2_SENSOR = 0
     DOT_1_SENSOR = 1
 
-    spotify_timer = time.time()
-    spotify_second_timer = time.time()
+    
     time_timer = time.time()
     internet_timer = time.time()
 
@@ -41,20 +40,13 @@ class Main(tk.Tk):
         self.view = MainView(self.canvas)
         self.view.render()
 
-        self.controller = MainController(self.view)
+        self.controller = MainController(self.view, self)
 
         self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
         self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
         self.view.update_item(self.view.time, self.timemodel.get_current_time())
         self.view.update_item(self.view.date, self.timemodel.get_current_date())
 
-        self.spotifymodel.get_current_track()
-        self.spotifymodel.get_device()
-
-        self.view.update_item(self.view.current_track, self.spotifymodel.get_current_track_title())
-        self.view.update_item(self.view.current_artist, self.spotifymodel.get_current_track_artists()[0])
-        self.view.update_item(self.view.current_device, self.spotifymodel.get_devices_name()[0])
-        self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
         while True:
             self.update()
@@ -73,7 +65,7 @@ class Main(tk.Tk):
                         self.view = MainView(self.canvas)
                         self.view.render()
 
-                        self.controller = MainController(self.view)
+                        self.controller = MainController(self.view, self)
 
                 # Dot 2
                 if(data[self.DOT_2_SENSOR] < 250):
@@ -87,9 +79,9 @@ class Main(tk.Tk):
                         self.view = SecondView(self.canvas)
                         self.view.render()
 
-                        self.controller = SecondController(self.view)
+                        self.controller = SecondController(self.view, self)
 
-                    self.controller.execute(data)
+                self.controller.execute(data)
 
             #     if(self.current_view == "mainview"):
             #         # Previous

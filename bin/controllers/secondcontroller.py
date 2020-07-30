@@ -3,15 +3,13 @@ import time
 import tkinter as tk
 
 from models.timemodel import TimeModel
-from models.framemodel import FrameModel
-from models.spotifymodel import SpotifyModel
 
-from views.mainview import MainView
+from .controller import Controller
 
-class SecondController:
+class SecondController(Controller):
 
-    def __init__(self, view):
-        self.view = view
+    def __init__(self, view, tk):
+        Controller.__init__(self, view, tk)
         
     def execute(self, data):
         print("Second controller")
