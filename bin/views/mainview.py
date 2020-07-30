@@ -18,7 +18,6 @@ class MainView(View):
         self.time = self.canvas.create_text(120, 200, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="sw")
         self.seconds = self.canvas.create_text(288, 170, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
-
         self.current_track = self.canvas.create_text(40, 1315, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 18), anchor="sw")
         self.current_artist = self.canvas.create_text(40, 1345, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 18), anchor="sw")
         self.current_device = self.canvas.create_text(40, 1375, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 18), anchor="sw")
@@ -38,15 +37,15 @@ class MainView(View):
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot1 = file
-        self.dot1 = self.canvas.create_image(470, 1475, image = file, anchor = "sw")
+        self.dot1 = self.canvas.create_image(470, 1455, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot2 = file
-        self.dot2 = self.canvas.create_image(510, 1475, image = file, anchor = "sw")
+        self.dot2 = self.canvas.create_image(510, 1455, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot3 = file
-        self.dot3 = self.canvas.create_image(550, 1475, image = file, anchor = "sw")
+        self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
 
     def disable_previous_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/previous.png"))

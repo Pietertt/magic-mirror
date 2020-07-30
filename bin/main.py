@@ -26,10 +26,11 @@ class Main(tk.Tk):
 
         self.framemodel = FrameModel()
 
-        self.view = MainView(self.canvas)
+        self.view = SecondView(self.canvas)
         self.view.render()
+        #self.view.spawn()
 
-        self.controller = MainController(self.view, self)
+        self.controller = SecondController(self.view, self)
 
         self.temperature_timer = time.time()
 
@@ -62,6 +63,7 @@ class Main(tk.Tk):
                         
                         self.view.clear_canvas()
                         self.view = SecondView(self.canvas)
+
                         self.view.render()
 
                         self.controller = SecondController(self.view, self)
