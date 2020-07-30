@@ -1,11 +1,6 @@
 
 import time
 import tkinter as tk
-from tkinter import messagebox as mb
-
-import sys 
-
-sys.path.append('..')
 
 from models.timemodel import TimeModel
 from models.framemodel import FrameModel
@@ -14,38 +9,20 @@ from models.spotifymodel import SpotifyModel
 from views.mainview import MainView
 
 class MainController:
-    previous_timer_1 = time.time()
-    previous_timer_2 = time.time()
+    NEXT_SENSOR = 2
+    PREVIOUS_SENSOR = 3
+    LINE_SENSOR = 4
 
-    next_timer_1 = time.time()
-    next_timer_2 = time.time()
-
-    add_to_coffee_playlist_timer_1 = time.time()
-    add_to_coffee_playlist_timer_2 = time.time()
-
-    time_timer = time.time()
-    temperature_timer = time.time()
-    spotify_timer = time.time()
-    current_track_timer = time.time()
-
-    previous_boolean = False
-    next_boolean = False
-    add_coffee_boolean = False
-
-    def __init__(self, frame):
-        print(frame)
-        label = tk.Label(master = frame, bg = "black", text = "Hoi")
-        label.config(font = ("Helvetica", 20), fg = "white")
-        label.place(x = 500, y = 500)
+    def __init__(self, view):
+        self.view = view
         # self.timemodel = TimeModel()
         # self.framemodel = FrameModel()
         # self.spotifymodel = SpotifyModel()
         # self.view = MainView(self, frame)
         # self.current_view = "main"
         
-    def execute(self):
-        while True:
-            pass
+    def execute(self, data):
+        print("Main controller")
         # self.view.seconds.set(self.timemodel.get_current_second())
         # self.view.time.set(self.timemodel.get_current_time())
         # self.view.date.set(self.timemodel.get_current_date())
@@ -160,12 +137,3 @@ class MainController:
         #                 self.view.current_time.set(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
 
         #             self.current_track_timer = time.time()
-
-        
-
-    def update_spotify_data(self):
-        self.spotifymodel.get_current_track()
-        self.view.current_track.set(self.spotifymodel.get_current_track_title())
-        self.view.current_artist.set(self.spotifymodel.get_current_track_artists()[0])
-        self.view.current_device.set(self.spotifymodel.get_devices_name()[0])
-        self.view.current_time.set(str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))

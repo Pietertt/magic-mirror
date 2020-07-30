@@ -4,6 +4,7 @@ import time
 from threading import Thread
 
 from controllers.maincontroller import MainController
+from controllers.secondcontroller import SecondController
 
 from views.mainview import MainView
 from views.secondview import SecondView
@@ -19,15 +20,11 @@ class Main(tk.Tk):
 
     DOT_2_SENSOR = 0
     DOT_1_SENSOR = 1
-    NEXT_SENSOR = 2
-    PREVIOUS_SENSOR = 3
-    LINE_SENSOR = 4
 
     spotify_timer = time.time()
     spotify_second_timer = time.time()
     time_timer = time.time()
-
-    current_view = None
+    internet_timer = time.time()
 
     def __init__(self):
         super().__init__()
@@ -43,10 +40,10 @@ class Main(tk.Tk):
 
         self.view = MainView(self.canvas)
         self.view.render()
-        self.current_view = "mainview"
+
+        self.controller = MainController(self.view)
 
         self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
-
         self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
         self.view.update_item(self.view.time, self.timemodel.get_current_time())
         self.view.update_item(self.view.date, self.timemodel.get_current_date())
@@ -63,7 +60,6 @@ class Main(tk.Tk):
             self.update()
             data = self.framemodel.read_serial()
             if data:
-                print(data)
 
                 # Dot 1
                 if(data[self.DOT_1_SENSOR] < 250):
@@ -75,8 +71,9 @@ class Main(tk.Tk):
 
                         self.view.clear_canvas()
                         self.view = MainView(self.canvas)
-                        self.current_view = "mainview"
                         self.view.render()
+
+                        self.controller = MainController(self.view)
 
                 # Dot 2
                 if(data[self.DOT_2_SENSOR] < 250):
@@ -88,54 +85,61 @@ class Main(tk.Tk):
                         
                         self.view.clear_canvas()
                         self.view = SecondView(self.canvas)
-                        self.current_view = "secondview"
                         self.view.render()
 
-                if(self.current_view == "mainview"):
-                    # Previous
-                    if((data[self.PREVIOUS_SENSOR] < 200) and (data[self.LINE_SENSOR] < 200)):
-                        if(self.cooldown == False):
-                            self.set_cooldown()
-                            self.spotifymodel.skip_to_previous_track()
-                            self.update_spotify_data()
-                            self.view.disable_previous_button()
-                            self.after(self.COOLDOWN_TIME, lambda: self.view.enable_previous_button())
-                            self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                        self.controller = SecondController(self.view)
+
+                    self.controller.execute(data)
+
+            #     if(self.current_view == "mainview"):
+            #         # Previous
+            #         if((data[self.PREVIOUS_SENSOR] < 200) and (data[self.LINE_SENSOR] < 200)):
+            #             if(self.cooldown == False):
+            #                 self.set_cooldown()
+            #                 self.spotifymodel.skip_to_previous_track()
+            #                 self.update_spotify_data()
+            #                 self.view.disable_previous_button()
+            #                 self.after(self.COOLDOWN_TIME, lambda: self.view.enable_previous_button())
+            #                 self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                     
-                    # Next
-                    if((data[self.NEXT_SENSOR] < 250) and (data[self.LINE_SENSOR] < 250)):
-                        if(self.cooldown == False):
-                            self.set_cooldown()
-                            self.spotifymodel.skip_to_next_track()
-                            self.update_spotify_data()
-                            self.view.disable_next_button()
-                            self.after(self.COOLDOWN_TIME, lambda: self.view.enable_next_button())
-                            self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+            #         # Next
+            #         if((data[self.NEXT_SENSOR] < 250) and (data[self.LINE_SENSOR] < 250)):
+            #             if(self.cooldown == False):
+            #                 self.set_cooldown()
+            #                 self.spotifymodel.skip_to_next_track()
+            #                 self.update_spotify_data()
+            #                 self.view.disable_next_button()
+            #                 self.after(self.COOLDOWN_TIME, lambda: self.view.enable_next_button())
+            #                 self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
-            if((time.time() - self.spotify_timer) >= 5):
-                if(self.current_view == "mainview"):
-                    self.update_spotify_data()
-                    self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
+            # if((time.time() - self.spotify_timer) >= 5):
+            #     if(self.current_view == "mainview"):
+            #         self.update_spotify_data()
+            #         self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
                 
-                self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+            #     self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
                 
-                self.spotify_timer = time.time()
-                pass
+            #     self.spotify_timer = time.time()
+            #     pass
 
-            if((time.time() - self.time_timer) >= 1):
-                if(self.current_view == "mainview"):
-                    # Update the spotify timer with +1
-                    self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+            # if(self.current_view == "secondview"):
+            #     if((time.time() - self.internet_timer) >= 60):
+            #         self.view.update_item(self.view.download, "60 Mbps")
 
-                    # Update the view
-                    self.view.update_item(self.view.current_time, str(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress())) + " / " + str(self.spotifymodel.get_current_track_duration()))
+            # if((time.time() - self.time_timer) >= 1):
+            #     if(self.current_view == "mainview"):
+            #         # Update the spotify timer with +1
+            #         self.spotifymodel.update_progress(self.spotifymodel.print_update_progress() + 1)
+
+            #         # Update the view
+            #         self.view.update_item(self.view.current_time, str(self.spotifymodel.convert_to_readable(self.spotifymodel.print_update_progress())) + " / " + str(self.spotifymodel.get_current_track_duration()))
                 
-                # Update the view 
-                self.view.update_item(self.view.time, self.timemodel.get_current_time())
-                self.view.update_item(self.view.date, self.timemodel.get_current_date())
-                self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
+            #     # Update the view 
+            #     self.view.update_item(self.view.time, self.timemodel.get_current_time())
+            #     self.view.update_item(self.view.date, self.timemodel.get_current_date())
+            #     self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
                 
-                self.time_timer = time.time()
+            #     self.time_timer = time.time()
         
 
     def update_spotify_data(self):
