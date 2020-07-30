@@ -40,35 +40,33 @@ class Main(tk.Tk):
             if data:
 
                 # Dot 1
-                if(data[self.DOT_1_SENSOR] < 250):
+                if(data[self.DOT_1_SENSOR] < 200):
                     if(self.cooldown == False):
-                        pass
-                        #self.set_cooldown()
-                        #self.view.disable_dot1_button()
-                        #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot1_button())
-                        #self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                        # self.set_cooldown()
+                        # self.view.disable_dot1_button()
+                        # self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot1_button())
+                        # self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
-                        #self.view.clear_canvas()
-                        #self.view = MainView(self.canvas)
-                        #self.view.render()
+                        self.view.clear_canvas()
+                        self.view = MainView(self.canvas)
+                        self.view.render()
 
-                        #self.controller = MainController(self.view, self)
+                        self.controller = MainController(self.view, self)
 
                 # Dot 2
-                if(data[self.DOT_2_SENSOR] < 250):
+                if(data[self.DOT_2_SENSOR] < 200):
                     if(self.cooldown == False):
-                        pass
-                        #self.set_cooldown()
-                        #self.view.disable_dot3_button()
-                        #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
-                        #self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                        # self.set_cooldown()
+                        # self.view.disable_dot3_button()
+                        # self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
+                        # self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                         
-                        #self.view.clear_canvas()
-                        #self.view = SecondView(self.canvas)
+                        self.view.clear_canvas()
+                        self.view = SecondView(self.canvas)
 
-                        #self.view.render()
+                        self.view.render()
 
-                        #self.controller = SecondController(self.view, self)
+                        self.controller = SecondController(self.view, self)
 
                 # Update the temperature value
                 if((time.time() - self.temperature_timer) >= 5):

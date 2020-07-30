@@ -1,5 +1,6 @@
 import time
 import os
+import subprocess
 
 class InternetModel:
     def __init__(self):
@@ -8,14 +9,18 @@ class InternetModel:
         ping = None
 
     def get_ip_address(self):
-        ip = os.system("hostname -I | cut -d' ' -f1 > ip.txt")
-        file = open("/home/pi/Desktop/magic-mirror/bin/ip.txt", "r")
-        return file.read().rstrip("\n")
+        #ip = os.system("hostname -I | cut -d' ' -f1 > ip.txt")
+        #file = open("/home/pi/Desktop/magic-mirror/bin/ip.txt", "r")
+        
+
+        ip = subprocess.check_output("hostname -I | grep -Eo '^[^ ]+'", shell=True)
+        stripped = ip.rstrip()
+        return stripped.decode('utf-8')
 
     def get_wifi_name(self):
-        ip = os.system("iwgetid -r > wifi.txt")
-        file = open("/home/pi/Desktop/magic-mirror/bin/wifi.txt", "r")
-        return file.read().rstrip("\n")
+        hostname = subprocess.check_output("iwgetid -r", shell=True)
+        stripped = hostname.rstrip()
+        return stripped.decode('utf-8')
 
 
     def execute_speed_test(self):
