@@ -83,9 +83,3 @@ class MainController(Controller):
         self.view.update_item(self.view.current_artist, self.spotifymodel.get_current_track_artists()[0])
         self.view.update_item(self.view.current_device, self.spotifymodel.get_devices_name()[0])
         self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-
-    def set_cooldown(self):
-        self.cooldown = True
-
-    def reset_cooldown(self):
-        self.cooldown = False

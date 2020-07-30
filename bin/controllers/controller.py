@@ -5,7 +5,9 @@ class Controller:
     def __init__(self, view, tk):
         self.view = view
         self.tk = tk
-  
-        
-    def execute(self, data):
-        pass
+    
+    def set_cooldown(self):
+        self.cooldown = True
+
+    def reset_cooldown(self):
+        self.cooldown = False
