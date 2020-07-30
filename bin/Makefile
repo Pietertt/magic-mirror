@@ -2,7 +2,7 @@ run:
 	@python3 main.py
 
 internet:
-	@python3 test.py
+	@python3 internet.py
 
 clean:
 	@rm -rf __pycache__ 

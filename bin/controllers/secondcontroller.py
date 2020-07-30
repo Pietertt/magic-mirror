@@ -19,7 +19,7 @@ class SecondController(Controller):
         self.internet_timer = time.time()
         self.time_timer = time.time()
 
-        #self.internetmodel.execute_speed_test()
+        self.internetmodel.execute_speed_test()
         
     def execute(self, data):
         print(data)
@@ -32,6 +32,13 @@ class SecondController(Controller):
             
             self.time_timer = time.time()
 
-        if((time.time() - self.internet_timer) >= 60):
-            #self.internetmodel.execute_speed_test()
+        if((time.time() - self.internet_timer) >= 5):
+            self.internetmodel.execute_speed_test()
             self.internet_timer = time.time()
+
+            try:
+                self.view.update_item(self.view.download_text, self.internetmodel.download_speed)
+                self.view.update_item(self.view.upload_text, self.internetmodel.upload_speed)
+                self.view.update_item(self.view.ping_text, self.internetmodel.ping)
+            except AttributeError:
+                print("Oops")
