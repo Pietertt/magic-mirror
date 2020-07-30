@@ -1,8 +1,10 @@
 
 import time
 import tkinter as tk
+import threading
 
 from models.timemodel import TimeModel
+from models.internetmodel import InternetModel
 
 from .controller import Controller
 
@@ -12,8 +14,12 @@ class SecondController(Controller):
         Controller.__init__(self, view, tk)
 
         self.timemodel = TimeModel()
+        self.internetmodel = InternetModel()
 
+        self.internet_timer = time.time()
         self.time_timer = time.time()
+
+        #self.internetmodel.execute_speed_test()
         
     def execute(self, data):
         print(data)
@@ -25,3 +31,7 @@ class SecondController(Controller):
             self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
             
             self.time_timer = time.time()
+
+        if((time.time() - self.internet_timer) >= 60):
+            #self.internetmodel.execute_speed_test()
+            self.internet_timer = time.time()
