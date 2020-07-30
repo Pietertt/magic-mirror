@@ -19,10 +19,10 @@ class SecondView(View):
         self.seconds = self.canvas.create_text(288, 170, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
         self.internet = self.canvas.create_text(180, 260, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), text = "Invictus hotspot", anchor="sw")
-        self.download_text = self.canvas.create_text(205, 295, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), text = "35.65", anchor="sw")
-        self.upload_text = self.canvas.create_text(340, 295, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), text = "6.65", anchor="sw")
-        self.ping_text = self.canvas.create_text(475, 295, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), text = "35 ms", anchor="sw")
-        self.ip_text = self.canvas.create_text(205, 330, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), text = "192.168.2.6", anchor="sw")
+        self.download_text = self.canvas.create_text(205, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.upload_text = self.canvas.create_text(340, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.ping_text = self.canvas.create_text(475, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.ip_text = self.canvas.create_text(205, 340, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot3 = file
@@ -34,19 +34,19 @@ class SecondView(View):
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/download.png"))
         self.canvas.download = file
-        self.download = self.canvas.create_image(175, 290, image = file, anchor = "sw")
+        self.download = self.canvas.create_image(175, 295, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/upload.png"))
         self.canvas.upload = file
-        self.upload = self.canvas.create_image(310, 290, image = file, anchor = "sw")
+        self.upload = self.canvas.create_image(310, 295, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/ping.png"))
         self.canvas.ping = file
-        self.ping = self.canvas.create_image(445, 290, image = file, anchor = "sw")
+        self.ping = self.canvas.create_image(445, 295, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/ip.png"))
         self.canvas.ip = file
-        self.ip = self.canvas.create_image(175, 325, image = file, anchor = "sw")
+        self.ip = self.canvas.create_image(175, 335, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot1 = file

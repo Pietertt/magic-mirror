@@ -40,5 +40,6 @@ class SecondController(Controller):
                 self.view.update_item(self.view.download_text, self.internetmodel.download_speed)
                 self.view.update_item(self.view.upload_text, self.internetmodel.upload_speed)
                 self.view.update_item(self.view.ping_text, self.internetmodel.ping)
+                self.view.update_item(self.view.ip_text, self.internetmodel.get_ip_address())
             except AttributeError:
                 print("Oops")

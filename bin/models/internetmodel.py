@@ -1,10 +1,16 @@
 import time
+import os
 
 class InternetModel:
     def __init__(self):
         upload_speed = None
         download_speed = None
         ping = None
+
+    def get_ip_address(self):
+        ip = os.system("hostname -I | cut -d' ' -f1 > ip.txt")
+        file = open("/home/pi/Desktop/magic-mirror/bin/ip.txt", "r")
+        return file.read().rstrip("\n")
 
     def execute_speed_test(self):
         file = open("/home/pi/Desktop/magic-mirror/bin/speed.txt", "r")
