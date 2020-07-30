@@ -9,10 +9,6 @@ class InternetModel:
         ping = None
 
     def get_ip_address(self):
-        #ip = os.system("hostname -I | cut -d' ' -f1 > ip.txt")
-        #file = open("/home/pi/Desktop/magic-mirror/bin/ip.txt", "r")
-        
-
         ip = subprocess.check_output("hostname -I | grep -Eo '^[^ ]+'", shell=True)
         stripped = ip.rstrip()
         return stripped.decode('utf-8')
@@ -21,6 +17,24 @@ class InternetModel:
         hostname = subprocess.check_output("iwgetid -r", shell=True)
         stripped = hostname.rstrip()
         return stripped.decode('utf-8')
+
+    def get_available_disk_space(self):
+        disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $4 }\'', shell=True)
+        stripped = disk_space.rstrip()
+        decoded = stripped.decode('utf-8')
+
+        value = round((int(decoded) / 1000000), 2)
+        
+        return str(value)
+
+    def get_total_disk_space(self):
+        disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $2 }\'', shell=True)
+        stripped = disk_space.rstrip()
+        decoded = stripped.decode('utf-8')
+
+        value = round((int(decoded) / 1000000), 2)
+        
+        return str(value)
 
 
     def execute_speed_test(self):

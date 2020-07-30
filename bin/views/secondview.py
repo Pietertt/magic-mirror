@@ -24,6 +24,8 @@ class SecondView(View):
         self.ping_text = self.canvas.create_text(475, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.ip_text = self.canvas.create_text(205, 340, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
+        self.disk_text = self.canvas.create_text(220, 525, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot3 = file
         self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
@@ -47,6 +49,14 @@ class SecondView(View):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/ip.png"))
         self.canvas.ip = file
         self.ip = self.canvas.create_image(175, 335, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/memory.png"))
+        self.canvas.memory = file
+        self.memory = self.canvas.create_image(120, 550, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/disk.png"))
+        self.canvas.disk = file
+        self.disk = self.canvas.create_image(180, 520, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot1 = file

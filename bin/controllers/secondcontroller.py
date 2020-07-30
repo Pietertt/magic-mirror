@@ -42,5 +42,7 @@ class SecondController(Controller):
                 self.view.update_item(self.view.upload_text, self.internetmodel.upload_speed)
                 self.view.update_item(self.view.ping_text, self.internetmodel.ping)
                 self.view.update_item(self.view.ip_text, self.internetmodel.get_ip_address())
+
+                self.view.update_item(self.view.disk_text, self.internetmodel.get_available_disk_space() + " GB / " + self.internetmodel.get_total_disk_space() + " GB")
             except AttributeError:
                 print("Oops")
