@@ -27,6 +27,25 @@ class InternetModel:
         
         return str(value)
 
+    def get_total_ram(self):
+        ram = subprocess.check_output('free -m | awk \'$1 == "Mem:" { print $2 }\'', shell=True)
+        stripped = ram.rstrip()
+        decoded = stripped.decode('utf-8')
+
+        value = round((int(decoded)), 2)
+        
+        return str(value)
+
+    def get_used_ram(self):
+        ram = subprocess.check_output('free -m | awk \'$1 == "Mem:" { print $3 }\'', shell=True)
+        stripped = ram.rstrip()
+        decoded = stripped.decode('utf-8')
+
+        value = round((int(decoded)), 2)
+        
+        return str(value)
+
+
     def get_total_disk_space(self):
         disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $2 }\'', shell=True)
         stripped = disk_space.rstrip()

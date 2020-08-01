@@ -24,7 +24,9 @@ class SecondView(View):
         self.ping_text = self.canvas.create_text(475, 300, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.ip_text = self.canvas.create_text(205, 340, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
-        self.disk_text = self.canvas.create_text(220, 525, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.canvas.create_text(180, 525, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), text = "Geheugen & opslag", anchor="sw")
+        self.disk_text = self.canvas.create_text(220, 565, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.ram_text = self.canvas.create_text(220, 605, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot3 = file
@@ -54,9 +56,13 @@ class SecondView(View):
         self.canvas.memory = file
         self.memory = self.canvas.create_image(120, 550, image = file, anchor = "sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/disk.png"))
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/space.png"))
         self.canvas.disk = file
-        self.disk = self.canvas.create_image(180, 520, image = file, anchor = "sw")
+        self.disk = self.canvas.create_image(180, 560, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/ram.png"))
+        self.canvas.ram = file
+        self.ram = self.canvas.create_image(180, 600, image = file, anchor = "sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
         self.canvas.dot1 = file

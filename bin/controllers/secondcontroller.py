@@ -22,7 +22,7 @@ class SecondController(Controller):
         self.internetmodel.execute_speed_test()
         
     def execute(self, data):
-        print(data)
+        #print(data)
 
         if((time.time() - self.time_timer) >= 1):
             # Update the view 
@@ -44,5 +44,6 @@ class SecondController(Controller):
                 self.view.update_item(self.view.ip_text, self.internetmodel.get_ip_address())
 
                 self.view.update_item(self.view.disk_text, self.internetmodel.get_available_disk_space() + " GB / " + self.internetmodel.get_total_disk_space() + " GB")
+                self.view.update_item(self.view.ram_text, self.internetmodel.get_used_ram() + " MB / " + self.internetmodel.get_total_ram() + " MB")
             except AttributeError:
                 print("Oops")
