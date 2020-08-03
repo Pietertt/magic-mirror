@@ -6,11 +6,9 @@ from models.timemodel import TimeModel
 from models.framemodel import FrameModel
 from models.spotifymodel import SpotifyModel
 
-from views.mainview import MainView
-
 from .controller import Controller
 
-class MainController(Controller):
+class FirstController(Controller):
     NEXT_SENSOR = 2
     PREVIOUS_SENSOR = 3
     LINE_SENSOR = 4

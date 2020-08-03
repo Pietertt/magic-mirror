@@ -6,7 +6,7 @@ from .view import View
 
 import time
 
-class MainView(View):
+class FirstView(View):
     def __init__(self, canvas):
         View.__init__(self, canvas)
                 

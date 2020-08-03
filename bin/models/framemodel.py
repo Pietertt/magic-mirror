@@ -6,7 +6,7 @@ class FrameModel:
         self.ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
         self.ser.flush()
 
-        self.temperature = str(20) + "\N{DEGREE SIGN}"
+        self.temperature = str(20) + ".0" + "\N{DEGREE SIGN}"
 
     def read_serial(self):
         if self.ser.in_waiting > 0:
