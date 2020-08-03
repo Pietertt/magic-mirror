@@ -16,6 +16,7 @@ class Main(tk.Tk):
 
     DOT_2_SENSOR = 0
     DOT_1_SENSOR = 1
+    LINE_SENSOR = 4
 
     def __init__(self):
         super().__init__()
@@ -39,7 +40,7 @@ class Main(tk.Tk):
             data = self.framemodel.read_serial()
             if data:
                 # Dot 1
-                if(data[self.DOT_2_SENSOR] < 100):
+                if((data[self.DOT_2_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         print("View 1")
@@ -54,7 +55,7 @@ class Main(tk.Tk):
                         self.controller = MainController(self.view, self)
 
                 # Dot 2
-                if(data[self.DOT_1_SENSOR] < 100):
+                if((data[self.DOT_1_SENSOR] < 100) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         print("View 2")
@@ -71,7 +72,7 @@ class Main(tk.Tk):
 
                 # Update the temperature value
                 if((time.time() - self.temperature_timer) >= 5):
-                    self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+                    
                     self.temperature_timer = time.time()
 
                 self.controller.execute(data)

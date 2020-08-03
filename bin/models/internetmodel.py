@@ -14,9 +14,12 @@ class InternetModel:
         return stripped.decode('utf-8')
 
     def get_wifi_name(self):
-        hostname = subprocess.check_output("iwgetid -r", shell=True)
-        stripped = hostname.rstrip()
-        return stripped.decode('utf-8')
+        try:
+            hostname = subprocess.check_output("iwgetid -r", shell=True)
+            stripped = hostname.rstrip()
+            return stripped.decode('utf-8')
+        except subprocess.CalledProcessError:
+            return "Unknown"
 
     def get_available_disk_space(self):
         disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $4 }\'', shell=True)

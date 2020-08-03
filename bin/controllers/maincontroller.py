@@ -19,12 +19,19 @@ class MainController(Controller):
         Controller.__init__(self, view, tk)
         self.timemodel = TimeModel()
         self.spotifymodel = SpotifyModel()
+        self.framemodel = FrameModel()
 
         self.spotify_timer = time.time()
         self.time_timer = time.time()
 
         self.spotifymodel.get_current_track()
         self.spotifymodel.get_device()
+
+        self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+
+        self.view.update_item(self.view.time, self.timemodel.get_current_time())
+        self.view.update_item(self.view.date, self.timemodel.get_current_date())
+        self.view.update_item(self.view.seconds, self.timemodel.get_current_second())
 
         self.view.update_item(self.view.current_track, self.spotifymodel.get_current_track_title())
         self.view.update_item(self.view.current_artist, self.spotifymodel.get_current_track_artists()[0])
@@ -59,7 +66,10 @@ class MainController(Controller):
         
             self.update_spotify_data()
             self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
-                                
+            
+            self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+
+
             self.spotify_timer = time.time()
 
         if((time.time() - self.time_timer) >= 1):
