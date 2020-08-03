@@ -50,7 +50,7 @@ class FirstController(Controller):
                 self.tk.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
         
         # Next
-        if((data[self.NEXT_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
+        if((data[self.NEXT_SENSOR] < 170) and (data[self.LINE_SENSOR] < 100)):
             if(self.cooldown == False):
                 self.set_cooldown()
                 self.spotifymodel.skip_to_next_track()

@@ -1,0 +1,1 @@
+cd /home/pi/Desktop/magic-mirror/bin && make run
