@@ -39,11 +39,11 @@ class MainView(View):
         self.canvas.dot1 = file
         self.dot1 = self.canvas.create_image(470, 1455, image = file, anchor = "sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.dot2 = file
         self.dot2 = self.canvas.create_image(510, 1455, image = file, anchor = "sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.dot3 = file
         self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
 

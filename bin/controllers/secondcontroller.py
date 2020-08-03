@@ -22,7 +22,7 @@ class SecondController(Controller):
         self.internetmodel.execute_speed_test()
         
     def execute(self, data):
-        #print(data)
+        print(data)
 
         if((time.time() - self.time_timer) >= 1):
             # Update the view 
@@ -37,7 +37,7 @@ class SecondController(Controller):
             self.internet_timer = time.time()
 
             try:
-                self.view.update_item(self.view.internet, self.internetmodel.get_wifi_name())
+                #self.view.update_item(self.view.internet, self.internetmodel.get_wifi_name())
                 self.view.update_item(self.view.download_text, self.internetmodel.download_speed)
                 self.view.update_item(self.view.upload_text, self.internetmodel.upload_speed)
                 self.view.update_item(self.view.ping_text, self.internetmodel.ping)

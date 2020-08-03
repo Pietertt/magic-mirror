@@ -35,7 +35,7 @@ class MainController(Controller):
         print(data)
 
         # Previous
-        if((data[self.PREVIOUS_SENSOR] < 200) and (data[self.LINE_SENSOR] < 200)):
+        if((data[self.PREVIOUS_SENSOR] < 100) and (data[self.LINE_SENSOR] < 100)):
             if(self.cooldown == False):
                 self.set_cooldown()
                 self.spotifymodel.skip_to_previous_track()
@@ -45,7 +45,7 @@ class MainController(Controller):
                 self.tk.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
         
         # Next
-        if((data[self.NEXT_SENSOR] < 250) and (data[self.LINE_SENSOR] < 250)):
+        if((data[self.NEXT_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
             if(self.cooldown == False):
                 self.set_cooldown()
                 self.spotifymodel.skip_to_next_track()

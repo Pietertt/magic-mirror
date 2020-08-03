@@ -28,10 +28,6 @@ class SecondView(View):
         self.disk_text = self.canvas.create_text(220, 565, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.ram_text = self.canvas.create_text(220, 605, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
-        self.canvas.dot3 = file
-        self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
-
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/wifi.png"))
         self.canvas.wifi = file
         self.wifi = self.canvas.create_image(120, 280, image = file, anchor = "sw")
@@ -64,13 +60,17 @@ class SecondView(View):
         self.canvas.ram = file
         self.ram = self.canvas.create_image(180, 600, image = file, anchor = "sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.dot1 = file
         self.dot1 = self.canvas.create_image(470, 1455, image = file, anchor = "sw")
 
-        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.dot2 = file
         self.dot2 = self.canvas.create_image(510, 1455, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        self.canvas.dot3 = file
+        self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
 
     def disable_dot1_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
