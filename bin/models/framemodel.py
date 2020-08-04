@@ -7,6 +7,7 @@ class FrameModel:
         self.ser.flush()
 
         self.temperature = str(20) + ".0" + "\N{DEGREE SIGN}"
+        self.light_level = 0
 
     def read_serial(self):
         if self.ser.in_waiting > 0:
@@ -17,15 +18,14 @@ class FrameModel:
                         try:
                             data = json.loads(line)
                             try:
-                                temperature = str(data["temperature"])
-                                if(len(temperature) == 4):
-                                    self.temperature = str(20) + "0" + "\N{DEGREE SIGN}"
-                                else:
-                                    self.temperature = str(20) + "\N{DEGREE SIGN}"
+                                self.light_level = str(data["temperature"])
+                            
                             except KeyError:
                                 print("Wrong format")
-
-                            return data["data"]
+                            
+                            d = data["data"]
+                            d.append(self.light_level)
+                            return d
                         except ValueError:
                             print("Wrong format")
                         except UnicodeDecodeError:
@@ -35,3 +35,6 @@ class FrameModel:
 
     def get_temperature(self):
         return self.temperature
+
+    def get_light_level(self):
+        return self.light_level

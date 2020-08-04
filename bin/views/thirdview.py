@@ -30,6 +30,7 @@ class ThirdView(View):
 
         self.canvas.create_text(180, 575, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), text = "Sensoren", anchor="sw")
         self.ir_text = self.canvas.create_text(215, 615, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+        self.light_text = self.canvas.create_text(215, 655, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/wifi.png"))
         self.canvas.wifi = file
@@ -90,6 +91,10 @@ class ThirdView(View):
         file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/images/white/ir.png')
         self.canvas.ir = file
         self.ir = self.canvas.create_image(180, 610, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/images/white/light.png')
+        self.canvas.light = file
+        self.light = self.canvas.create_image(180, 650, image = file, anchor = "sw")
 
     def disable_dot1_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))

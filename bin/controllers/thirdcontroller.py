@@ -65,6 +65,7 @@ class ThirdController(Controller):
             self.internetmodel.restart()
 
         self.view.update_item(self.view.ir_text, (str(data[0]) + " - " + str(data[1]) + " - " + str(data[2]) + " - " + str(data[3]) + " - " + str(data[4])))
+        self.view.update_item(self.view.light_text, (str(data[5]) + " / 1024"))
 
 
         if((time.time() - self.time_timer) >= 1):
