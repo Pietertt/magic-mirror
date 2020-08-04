@@ -80,6 +80,10 @@ class ThirdView(View):
         self.canvas.restart = file
         self.restart = self.canvas.create_image(160, 1455, image = file, anchor = "sw")
 
+        file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_15_delay-0.04s.gif')
+        self.canvas.activity = file
+        self.activity = self.canvas.create_image(120, 600, image = file, anchor = "sw")
+
     def disable_dot1_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.dot1 = file

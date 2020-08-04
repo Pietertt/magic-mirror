@@ -2,6 +2,7 @@
 import time
 import tkinter as tk
 import threading
+from PIL import Image, ImageTk
 
 from models.timemodel import TimeModel
 from models.internetmodel import InternetModel
@@ -10,6 +11,9 @@ from models.framemodel import FrameModel
 from .controller import Controller
 
 class ThirdController(Controller):
+
+    files = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27"]
+    i = 0
 
     def __init__(self, view, tk):
         Controller.__init__(self, view, tk)
@@ -41,6 +45,20 @@ class ThirdController(Controller):
 
     def execute(self, data):
         print(data)
+
+        # file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
+        # self.view.canvas.activity = file
+
+        file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
+        self.view.canvas.activity = file
+        self.view.activity = self.view.canvas.create_image(120, 600, image = file, anchor = "sw")
+        
+        self.i = self.i + 1
+
+        print(self.i)
+
+        if(self.i >= 27):
+            self.i = 0
 
         if((data[3] < 150) and (data[4] < 100)):
             self.internetmodel.shutdown()
