@@ -51,11 +51,9 @@ class ThirdController(Controller):
 
         file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
         self.view.canvas.activity = file
-        self.view.activity = self.view.canvas.create_image(120, 600, image = file, anchor = "sw")
+        self.view.activity = self.view.canvas.create_image(120, 580, image = file, anchor = "sw")
         
         self.i = self.i + 1
-
-        print(self.i)
 
         if(self.i >= 27):
             self.i = 0
@@ -65,6 +63,8 @@ class ThirdController(Controller):
 
         if((data[2] < 150) and (data[4] < 100)):
             self.internetmodel.restart()
+
+        self.view.update_item(self.view.ir_text, (str(data[0]) + " - " + str(data[1]) + " - " + str(data[2]) + " - " + str(data[3]) + " - " + str(data[4])))
 
 
         if((time.time() - self.time_timer) >= 1):
@@ -83,16 +83,12 @@ class ThirdController(Controller):
             self.time_timer = time.time()
 
         if((time.time() - self.internet_timer) >= 5):
-            #self.internetmodel.execute_speed_test()
             self.internet_timer = time.time()
 
             self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
 
             try:
                 self.view.update_item(self.view.internet, self.internetmodel.get_wifi_name())
-                # self.view.update_item(self.view.download_text, self.internetmodel.download_speed)
-                # self.view.update_item(self.view.upload_text, self.internetmodel.upload_speed)
-                # self.view.update_item(self.view.ping_text, self.internetmodel.ping)
                 self.view.update_item(self.view.ip_text, self.internetmodel.get_ip_address())
 
             except AttributeError:
