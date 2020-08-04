@@ -4,9 +4,9 @@ import subprocess
 
 class InternetModel:
     def __init__(self):
-        upload_speed = None
-        download_speed = None
-        ping = None
+        self.upload_speed = 999
+        self.download_speed = 999
+        self.ping = 999
 
     def get_ip_address(self):
         ip = subprocess.check_output("hostname -I | grep -Eo '^[^ ]+'", shell=True)
@@ -48,6 +48,9 @@ class InternetModel:
         
         return str(value)
 
+    def shutdown(self):
+        subprocess.Popen(["shutdown", "now"])
+
 
     def get_total_disk_space(self):
         disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $2 }\'', shell=True)
@@ -60,15 +63,13 @@ class InternetModel:
 
 
     def execute_speed_test(self):
-        file = open("/home/pi/Desktop/magic-mirror/bin/speed.txt", "r")
-        lines = file.readlines() 
+        data = subprocess.check_output('speedtest --simple', shell=True).decode("utf-8")
 
         output = []
 
-        for line in lines:
-            splitted = line.split()
-            for split in splitted:
-                output.append(split)
+        splitted = data.split()
+        for split in splitted:
+            output.append(split)
         
         try:
             self.upload_speed = output[7]

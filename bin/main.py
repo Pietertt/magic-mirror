@@ -31,11 +31,11 @@ class Main(tk.Tk):
 
         self.framemodel = FrameModel()
 
-        self.view = FirstView(self.canvas)
+        self.view = ThirdView(self.canvas)
         self.view.render()
         #self.view.spawn()
 
-        self.controller = FirstController(self.view, self)
+        self.controller = ThirdController(self.view, self)
 
         self.temperature_timer = time.time()
 
@@ -44,8 +44,9 @@ class Main(tk.Tk):
             data = self.framemodel.read_serial()
             if data:
                 # Dot 1
-                if((data[self.DOT_2_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
+                if((data[self.DOT_2_SENSOR] < 80) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):
+                        print("View 1")
                         self.set_cooldown()
                         #self.view.disable_dot1_button()
                         #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot1_button())
