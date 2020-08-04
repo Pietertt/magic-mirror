@@ -51,6 +51,9 @@ class InternetModel:
     def shutdown(self):
         subprocess.Popen(["shutdown", "now"])
 
+    def restart(self):
+        subprocess.Popen(["reboot", "now"])
+
 
     def get_total_disk_space(self):
         disk_space = subprocess.check_output('df | awk \'$1 == "/dev/root" { print $2 }\'', shell=True)

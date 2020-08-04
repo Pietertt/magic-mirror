@@ -46,7 +46,7 @@ class ThirdController(Controller):
             self.internetmodel.shutdown()
 
         if((data[2] < 150) and (data[4] < 100)):
-            print("Restart")
+            self.internetmodel.restart()
 
 
         if((time.time() - self.time_timer) >= 1):
