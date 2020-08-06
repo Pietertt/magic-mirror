@@ -59,20 +59,20 @@ class Main(tk.Tk):
                         self.controller = FirstController(self.view, self)
 
                 # Dot 2
-                # if((data[self.DOT_2_SENSOR] > 150) and (data[self.DOT_1_SENSOR] > 100) and (data[3] > 150) and (data[2] > 150) and (data[self.LINE_SENSOR] < 100)):
-                #     self.set_cooldown()
-                #     print("View 2" + str(data[self.DOT_1_SENSOR]))
+                if((data[self.DOT_2_SENSOR] > 250) and (data[self.DOT_1_SENSOR] > 250) and (data[3] > 200) and (data[2] > 250) and (data[self.LINE_SENSOR] < 100)):
+                    self.set_cooldown()
+                    print("View 2" + str(data[self.DOT_1_SENSOR]))
             
-                #     #self.view.disable_dot3_button()
-                #     #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
-                #     self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                    #self.view.disable_dot3_button()
+                    #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
+                    self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                     
-                #     self.view.clear_canvas()
-                #     self.view = SecondView(self.canvas)
+                    self.view.clear_canvas()
+                    self.view = SecondView(self.canvas)
 
-                #     self.view.render()
+                    self.view.render()
 
-                #     self.controller = SecondController(self.view, self)
+                    self.controller = SecondController(self.view, self)
                 # Dot 3
                 if((data[self.DOT_1_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):

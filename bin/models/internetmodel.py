@@ -1,6 +1,8 @@
 import time
 import os
 import subprocess
+import json 
+from PIL import Image
 
 class InternetModel:
     def __init__(self):
@@ -81,5 +83,21 @@ class InternetModel:
         except IndexError:
             print("Index error")
 
+    def get_apod(self):
+        os.system("curl https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY > apod.txt")
 
-    
+    def get_apod_image(self):
+        image = subprocess.check_output('cat apod.txt', shell=True).decode("utf-8")
+        data = json.loads(image)
+
+        os.system("curl " + data["url"] + " > apod.jpg")
+
+        basewidth = 776
+        img = Image.open('apod.jpg')
+        wpercent = (basewidth/float(img.size[0]))
+        hsize = int((float(img.size[1])*float(wpercent)))
+        img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+        img.save('apod.jpg') 
+
+    def get_apod_text(self):
+        
