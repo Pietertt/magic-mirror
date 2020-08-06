@@ -37,10 +37,9 @@ class FirstController(Controller):
         self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
         
     def execute(self, data):
-        print(data)
-
+        
         # Previous
-        if((data[self.PREVIOUS_SENSOR] < 100) and (data[self.LINE_SENSOR] < 100)):
+        if((data[self.PREVIOUS_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
             if(self.cooldown == False):
                 self.set_cooldown()
                 self.spotifymodel.skip_to_previous_track()
@@ -50,7 +49,7 @@ class FirstController(Controller):
                 self.tk.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
         
         # Next
-        if((data[self.NEXT_SENSOR] < 170) and (data[self.LINE_SENSOR] < 100)):
+        if((data[self.NEXT_SENSOR] < 150) and (data[self.LINE_SENSOR] < 100)):
             if(self.cooldown == False):
                 self.set_cooldown()
                 self.spotifymodel.skip_to_next_track()

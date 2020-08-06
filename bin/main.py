@@ -44,7 +44,7 @@ class Main(tk.Tk):
             data = self.framemodel.read_serial()
             if data:
                 # Dot 1
-                if((data[self.DOT_2_SENSOR] < 80) and (data[self.LINE_SENSOR] < 100)):
+                if((data[self.DOT_2_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):
                         print("View 1")
                         self.set_cooldown()
@@ -74,7 +74,7 @@ class Main(tk.Tk):
 
                 #     self.controller = SecondController(self.view, self)
                 # Dot 3
-                if((data[self.DOT_1_SENSOR] < 100) and (data[self.LINE_SENSOR] < 100)):
+                if((data[self.DOT_1_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
                     if(self.cooldown == False):
                         self.set_cooldown()
                         #self.view.disable_dot3_button()

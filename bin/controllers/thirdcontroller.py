@@ -44,7 +44,6 @@ class ThirdController(Controller):
 
 
     def execute(self, data):
-        print(data)
 
         # file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
         # self.view.canvas.activity = file
@@ -58,11 +57,13 @@ class ThirdController(Controller):
         if(self.i >= 27):
             self.i = 0
 
-        if((data[3] < 150) and (data[4] < 100)):
-            self.internetmodel.shutdown()
+        if((data[3] < 300) and (data[4] < 100)):
+            #self.internetmodel.shutdown()
+            pass
 
-        if((data[2] < 150) and (data[4] < 100)):
-            self.internetmodel.restart()
+        if((data[2] < 400) and (data[4] < 100)):
+            #self.internetmodel.restart()
+            pass
 
         self.view.update_item(self.view.ir_text, (str(data[0]) + " - " + str(data[1]) + " - " + str(data[2]) + " - " + str(data[3]) + " - " + str(data[4])))
         self.view.update_item(self.view.light_text, (str(data[5]) + " / 1024"))

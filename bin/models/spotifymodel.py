@@ -12,7 +12,7 @@ class SpotifyModel:
     CLIENT_ID = os.environ.get("SPOTIPY_CLIENT_ID")
     CLIENT_SECRET = os.environ.get("SPOTIPY_CLIENT_SECRET")
     REDIRECT_URI = os.environ.get("SPOTIPY_REDIRECT_URI")
-    SCOPE = 'user-read-currently-playing, user-read-playback-state,user-modify-playback-state, app-remote-control, playlist-modify' 
+    SCOPE = 'user-read-currently-playing, user-read-playback-state, user-modify-playback-state, app-remote-control, playlist-modify' 
 
     allow_skip = time.time()
     allow_pause = time.time()
@@ -65,6 +65,9 @@ class SpotifyModel:
 
     def get_device(self):
         self.devices = self.sp.devices()["devices"]
+
+    def get_device_id(self):
+            return self.devices[0]["id"]
 
     def get_devices_name(self):
         devices = []
