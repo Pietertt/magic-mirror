@@ -100,4 +100,6 @@ class InternetModel:
         img.save('apod.jpg') 
 
     def get_apod_text(self):
-        
+        image = subprocess.check_output('cat apod.txt', shell=True).decode("utf-8")
+        data = json.loads(image)
+        return data["title"]
