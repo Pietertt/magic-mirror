@@ -18,7 +18,8 @@ class SecondView(View):
         self.time = self.canvas.create_text(120, 200, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="sw")
         self.seconds = self.canvas.create_text(288, 170, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
-        self.title = self.canvas.create_text(120, 860, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="nw")
+        self.title = self.canvas.create_text(120, 900, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 50), anchor="nw")
+        self.explanation = self.canvas.create_text(120, 980, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 16), anchor="nw", width = 776)
 
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
         self.canvas.apod_image = file

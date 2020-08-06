@@ -103,3 +103,8 @@ class InternetModel:
         image = subprocess.check_output('cat apod.txt', shell=True).decode("utf-8")
         data = json.loads(image)
         return data["title"]
+
+    def get_apod_explanation(self):
+        image = subprocess.check_output('cat apod.txt', shell=True).decode("utf-8")
+        data = json.loads(image)
+        return data["explanation"]

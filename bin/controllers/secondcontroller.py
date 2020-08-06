@@ -31,6 +31,7 @@ class SecondController(Controller):
         self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
 
         self.view.update_item(self.view.title, self.internetmodel.get_apod_text())
+        self.view.update_item(self.view.explanation, self.internetmodel.get_apod_explanation())
 
         self.view.update_item(self.view.time, self.timemodel.get_current_time())
         self.view.update_item(self.view.date, self.timemodel.get_current_date())
