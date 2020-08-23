@@ -11,7 +11,7 @@ from views.secondview import SecondView
 from views.thirdview import ThirdView
 from views.mainview import MainView
 
-from models.framemodel import FrameModel
+#from models.framemodel import FrameModel
 
 class Main(tk.Tk):
     
@@ -29,19 +29,20 @@ class Main(tk.Tk):
         self.title("Magic Mirror")
         self.wm_attributes('-type', 'splash')
 
-        self.framemodel = FrameModel()
+        #self.framemodel = FrameModel()
 
-        self.view = ThirdView(self.canvas)
+        self.view = FirstView(self.canvas)
         self.view.render()
         #self.view.spawn()
 
-        self.controller = ThirdController(self.view, self)
+        self.controller = FirstController(self.view, self)
 
         self.temperature_timer = time.time()
 
         while True:
             self.update()
-            data = self.framemodel.read_serial()
+            #data = self.framemodel.read_serial()
+            data = None
             if data:
                 # Dot 1
                 if((data[self.DOT_2_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
@@ -93,7 +94,7 @@ class Main(tk.Tk):
                     
                     self.temperature_timer = time.time()
 
-                self.controller.execute(data)
+            self.controller.execute(data)
 
 
                 # Execute the current controller
