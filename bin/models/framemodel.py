@@ -22,17 +22,17 @@ class FrameModel:
                                 self.temperature = str(data["temperature"])
                             
                             except KeyError:
-                                print("Wrong format")
+                                pass
                             
                             d = data["data"]
                             d.append(self.light_level)
                             return d
                         except ValueError:
-                            print("Wrong format")
+                            pass
                         except UnicodeDecodeError:
-                            print("Unicode error")
+                            pass
             except ValueError:
-                print("Unicode error")
+                pass
 
     def get_temperature(self):
         return self.temperature

@@ -26,8 +26,8 @@ class ThirdController(Controller):
         self.time_timer = time.time()
         self.speed_timer = time.time()
 
-        x = threading.Thread(target = self.internetmodel.execute_speed_test)
-        x.start()
+        #x = threading.Thread(target = self.internetmodel.execute_speed_test)
+        #x.start()
 
         self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
         self.view.update_item(self.view.time, self.timemodel.get_current_time())
@@ -94,7 +94,7 @@ class ThirdController(Controller):
                 self.view.update_item(self.view.ip_text, self.internetmodel.get_ip_address())
 
             except AttributeError:
-                print("Oops")
+                pass
 
         # if((time.time() - self.speed_timer) >= 300):
         #     x = threading.Thread(target = self.internetmodel.execute_speed_test)

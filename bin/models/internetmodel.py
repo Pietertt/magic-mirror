@@ -81,7 +81,7 @@ class InternetModel:
             self.download_speed = output[4]
             self.ping = output[1]
         except IndexError:
-            print("Index error")
+            pass
 
     def get_apod(self):
         os.system("curl https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY > apod.txt")

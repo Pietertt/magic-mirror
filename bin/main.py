@@ -28,6 +28,7 @@ class Main(tk.Tk):
         self.canvas.pack()
         self.title("Magic Mirror")
         self.wm_attributes('-type', 'splash')
+        self.config(cursor = "none")
 
         self.framemodel = FrameModel()
 
@@ -76,7 +77,6 @@ class Main(tk.Tk):
                 #     self.controller = SecondController(self.view, self)
                 # # Dot 3
                 if((data[self.DOT_1_SENSOR] < 250)):
-                    print("Next view")
                     if(self.cooldown == False):
                         self.set_cooldown()
                 #         #self.view.disable_dot3_button()
