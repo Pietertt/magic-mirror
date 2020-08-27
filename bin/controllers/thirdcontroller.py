@@ -48,14 +48,14 @@ class ThirdController(Controller):
         # file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
         # self.view.canvas.activity = file
 
-        file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
-        self.view.canvas.activity = file
-        self.view.activity = self.view.canvas.create_image(120, 580, image = file, anchor = "sw")
+        # file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/gif/activity/frame_' + self.files[self.i] + '_delay-0.04s.gif')
+        # self.view.canvas.activity = file
+        # self.view.activity = self.view.canvas.create_image(120, 580, image = file, anchor = "sw")
         
-        self.i = self.i + 1
+        # self.i = self.i + 1
 
-        if(self.i >= 27):
-            self.i = 0
+        # if(self.i >= 27):
+        #     self.i = 0
 
         if((data[3] < 300) and (data[4] < 100)):
             #self.internetmodel.shutdown()
@@ -96,8 +96,8 @@ class ThirdController(Controller):
             except AttributeError:
                 print("Oops")
 
-        if((time.time() - self.speed_timer) >= 300):
-            x = threading.Thread(target = self.internetmodel.execute_speed_test)
-            x.start()
+        # if((time.time() - self.speed_timer) >= 300):
+        #     x = threading.Thread(target = self.internetmodel.execute_speed_test)
+        #     x.start()
 
-            self.speed_timer = time.time()
+        #     self.speed_timer = time.time()
