@@ -11,7 +11,7 @@ from views.secondview import SecondView
 from views.thirdview import ThirdView
 from views.mainview import MainView
 
-#from models.framemodel import FrameModel
+from models.framemodel import FrameModel
 
 class Main(tk.Tk):
     
@@ -29,7 +29,7 @@ class Main(tk.Tk):
         self.title("Magic Mirror")
         self.wm_attributes('-type', 'splash')
 
-        #self.framemodel = FrameModel()
+        self.framemodel = FrameModel()
 
         self.view = FirstView(self.canvas)
         self.view.render()
@@ -41,60 +41,59 @@ class Main(tk.Tk):
 
         while True:
             self.update()
-            #data = self.framemodel.read_serial()
-            data = None
+            data = self.framemodel.read_serial()
             if data:
                 # Dot 1
-                if((data[self.DOT_2_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
-                    if(self.cooldown == False):
-                        print("View 1")
-                        self.set_cooldown()
-                        #self.view.disable_dot1_button()
-                        #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot1_button())
-                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                # if((data[self.DOT_2_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
+                #     if(self.cooldown == False):
+                #         print("View 1")
+                #         self.set_cooldown()
+                #         #self.view.disable_dot1_button()
+                #         #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot1_button())
+                #         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
-                        self.view.clear_canvas()
-                        self.view = FirstView(self.canvas)
-                        self.view.render()
+                #         self.view.clear_canvas()
+                #         self.view = FirstView(self.canvas)
+                #         self.view.render()
 
-                        self.controller = FirstController(self.view, self)
+                #         self.controller = FirstController(self.view, self)
 
-                # Dot 2
-                if((data[self.DOT_2_SENSOR] > 250) and (data[self.DOT_1_SENSOR] > 250) and (data[3] > 200) and (data[2] > 250) and (data[self.LINE_SENSOR] < 100)):
-                    self.set_cooldown()
-                    print("View 2" + str(data[self.DOT_1_SENSOR]))
+                # # Dot 2
+                # if((data[self.DOT_2_SENSOR] > 250) and (data[self.DOT_1_SENSOR] > 250) and (data[3] > 200) and (data[2] > 250) and (data[self.LINE_SENSOR] < 100)):
+                #     self.set_cooldown()
+                #     print("View 2" + str(data[self.DOT_1_SENSOR]))
             
-                    #self.view.disable_dot3_button()
-                    #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
-                    self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                #     #self.view.disable_dot3_button()
+                #     #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
+                #     self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                     
-                    self.view.clear_canvas()
-                    self.view = SecondView(self.canvas)
+                #     self.view.clear_canvas()
+                #     self.view = SecondView(self.canvas)
 
-                    self.view.render()
+                #     self.view.render()
 
-                    self.controller = SecondController(self.view, self)
-                # Dot 3
-                if((data[self.DOT_1_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
-                    if(self.cooldown == False):
-                        self.set_cooldown()
-                        #self.view.disable_dot3_button()
-                        #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
-                        self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
+                #     self.controller = SecondController(self.view, self)
+                # # Dot 3
+                # if((data[self.DOT_1_SENSOR] < 200) and (data[self.LINE_SENSOR] < 100)):
+                #     if(self.cooldown == False):
+                #         self.set_cooldown()
+                #         #self.view.disable_dot3_button()
+                #         #self.after(self.COOLDOWN_TIME, lambda: self.view.enable_dot3_button())
+                #         self.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
                         
-                        self.view.clear_canvas()
-                        self.view = ThirdView(self.canvas)
+                #         self.view.clear_canvas()
+                #         self.view = ThirdView(self.canvas)
 
-                        self.view.render()
+                #         self.view.render()
 
-                        self.controller = ThirdController(self.view, self)
+                #         self.controller = ThirdController(self.view, self)
 
                 # Update the temperature value
                 if((time.time() - self.temperature_timer) >= 5):
                     
                     self.temperature_timer = time.time()
 
-            self.controller.execute(data)
+                self.controller.execute(data)
 
 
                 # Execute the current controller

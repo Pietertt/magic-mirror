@@ -17,15 +17,15 @@ class FirstController(Controller):
         Controller.__init__(self, view, tk)
         self.timemodel = TimeModel()
         #self.spotifymodel = SpotifyModel()
-        #self.framemodel = FrameModel()
+        self.framemodel = FrameModel()
 
-        #self.spotify_timer = time.time()
+        self.spotify_timer = time.time()
         self.time_timer = time.time()
 
         #self.spotifymodel.get_current_track()
         #self.spotifymodel.get_device()
 
-        #self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+        self.view.update_item(self.view.temperature, str(20) + ".0" + "\N{DEGREE SIGN}")
 
         self.view.update_item(self.view.time, self.timemodel.get_current_time())
         self.view.update_item(self.view.date, self.timemodel.get_current_date())
@@ -59,16 +59,16 @@ class FirstController(Controller):
         #         self.tk.after(self.COOLDOWN_TIME, lambda: self.reset_cooldown())
 
         
-        #if((time.time() - self.spotify_timer) >= 5):
+        if((time.time() - self.spotify_timer) >= 5):
             #pass
         
             #self.update_spotify_data()
             #self.view.update_item(self.view.current_time, str(self.spotifymodel.get_current_track_progress()) + " / " + str(self.spotifymodel.get_current_track_duration()))
             
-            #self.view.update_item(self.view.temperature, self.framemodel.get_temperature())
+            self.view.update_item(self.view.temperature, str(data[5]) + "\N{DEGREE SIGN}")
 
 
-            #self.spotify_timer = time.time()
+            self.spotify_timer = time.time()
 
         if((time.time() - self.time_timer) >= 1):
             

@@ -19,6 +19,7 @@ class FrameModel:
                             data = json.loads(line)
                             try:
                                 self.light_level = str(data["temperature"])
+                                self.temperature = str(data["temperature"])
                             
                             except KeyError:
                                 print("Wrong format")

@@ -35,17 +35,17 @@ class FirstView(View):
         # self.canvas.next = file
         # self.next = self.canvas.create_image(160, 1455, image = file, anchor = "sw")
 
-        # file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
-        # self.canvas.dot1 = file
-        # self.dot1 = self.canvas.create_image(470, 1455, image = file, anchor = "sw")
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/dot.png"))
+        self.canvas.dot1 = file
+        self.dot1 = self.canvas.create_image(470, 1455, image = file, anchor = "sw")
 
-        # file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
-        # self.canvas.dot2 = file
-        # self.dot2 = self.canvas.create_image(510, 1455, image = file, anchor = "sw")
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
+        self.canvas.dot2 = file
+        self.dot2 = self.canvas.create_image(510, 1455, image = file, anchor = "sw")
 
-        # file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
-        # self.canvas.dot3 = file
-        # self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))
+        self.canvas.dot3 = file
+        self.dot3 = self.canvas.create_image(550, 1455, image = file, anchor = "sw")
 
     def disable_previous_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/previous.png"))
