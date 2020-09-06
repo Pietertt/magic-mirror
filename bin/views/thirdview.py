@@ -32,6 +32,9 @@ class ThirdView(View):
         self.ir_text = self.canvas.create_text(215, 615, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
         self.light_text = self.canvas.create_text(215, 655, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
 
+        self.lock_text = self.canvas.create_text(180, 720, fill = "white", font = tkinter.font.Font(family = "Helvetica", size = 25), text = "Security", anchor="sw")
+        self.people_text = self.canvas.create_text(220, 760, fill = "#%02x%02x%02x" % (100, 100, 100), font = tkinter.font.Font(family = "Helvetica", size = 25), anchor="sw")
+
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/wifi.png"))
         self.canvas.wifi = file
         self.wifi = self.canvas.create_image(120, 280, image = file, anchor = "sw")
@@ -95,6 +98,14 @@ class ThirdView(View):
         # file = ImageTk.PhotoImage(file='/home/pi/Desktop/magic-mirror/assets/images/white/light.png')
         # self.canvas.light = file
         # self.light = self.canvas.create_image(180, 650, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/lock.png"))
+        self.canvas.lock = file
+        self.lock = self.canvas.create_image(130, 740, image = file, anchor = "sw")
+
+        file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/white/people.png"))
+        self.canvas.people = file
+        self.people = self.canvas.create_image(180, 755, image = file, anchor = "sw")
 
     def disable_dot1_button(self):
         file = ImageTk.PhotoImage(Image.open("/home/pi/Desktop/magic-mirror/assets/images/grayscale/dot.png"))

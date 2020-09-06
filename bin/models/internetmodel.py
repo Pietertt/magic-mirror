@@ -83,6 +83,14 @@ class InternetModel:
         except IndexError:
             pass
 
+    def get_logged_in_users(self):
+        users = subprocess.check_output("last | grep 'still logged in' | wc -l", shell = True)
+        stripped = users.rstrip()
+        decoded = stripped.decode('utf-8')
+
+        return str(decoded)
+
+
     def get_apod(self):
         os.system("curl https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY > apod.txt")
 

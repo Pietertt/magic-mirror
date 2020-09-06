@@ -41,6 +41,8 @@ class ThirdController(Controller):
         self.view.update_item(self.view.disk_text, self.internetmodel.get_available_disk_space() + " GB / " + self.internetmodel.get_total_disk_space() + " GB")
         self.view.update_item(self.view.ram_text, self.internetmodel.get_used_ram() + " MB / " + self.internetmodel.get_total_ram() + " MB")
 
+        self.view.update_item(self.view.people_text, self.internetmodel.get_logged_in_users() + " gebruikers")
+
 
 
     def execute(self, data):
