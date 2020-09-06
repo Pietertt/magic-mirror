@@ -32,11 +32,11 @@ class Main(tk.Tk):
 
         self.framemodel = FrameModel()
 
-        self.view = FirstView(self.canvas)
+        self.view = ThirdView(self.canvas)
         self.view.render()
         #self.view.spawn()
 
-        self.controller = FirstController(self.view, self)
+        self.controller = ThirdController(self.view, self)
 
         self.temperature_timer = time.time()
 
